@@ -1,0 +1,17 @@
+import { Link } from "react-router-dom";
+import "./MainNavigation.css";
+
+const MainNavigation = () => {
+    return (
+        <div className="main-navigation-wrapper">
+            <img className="logo" src="/sneemy-logo.svg" alt="Sneemy" />
+            <nav className="main-navigation">
+            <Link to="/">Home</Link>
+            <Link to="/about-us">About Us</Link>
+            <Link className="highlighted-nav-link" to="/">Naruči video</Link>
+        </nav></div>
+
+    )
+}
+
+export default MainNavigation

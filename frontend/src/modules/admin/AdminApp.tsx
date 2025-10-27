@@ -8,7 +8,7 @@ const Users = lazy(() => import("./pages/Users"));
 export default function AdminApp() {
   return (
     <div className="admin-root">
-      <nav style={{ marginBottom: "1rem" }}>
+      <nav>
         <Link to="/admin">Dashboard</Link> ·{" "}
         <Link to="/admin/users">Users</Link>
       </nav>
