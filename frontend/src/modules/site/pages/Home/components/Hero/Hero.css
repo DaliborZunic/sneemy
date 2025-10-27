@@ -1,0 +1,5 @@
+.hero-wrapper {
+    max-height: 978px;
+    height: 100%;
+    background: linear-gradient(60deg, #4500a2 0%, #8c00e4 100%);
+}
