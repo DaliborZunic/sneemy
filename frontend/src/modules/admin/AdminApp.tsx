@@ -1,3 +1,4 @@
+import "./AdminApp.css";
 import { Routes, Route, Link } from "react-router-dom";
 import { Suspense, lazy } from "react";
 
