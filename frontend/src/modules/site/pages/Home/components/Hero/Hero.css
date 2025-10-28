@@ -20,9 +20,9 @@
 }
 
 .hero-wrapper {
-    padding-top: 230px;
-    max-height: 978px;
+    padding-top: 170px;
     height: 100%;
+    max-height:906px;
     background: linear-gradient(60deg, #4500a2 0%, #8c00e4 100%);
     color: #f4f0f7;
 }
