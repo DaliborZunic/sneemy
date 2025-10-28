@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "./MainNavigation.css";
- import logo from "../../../../assets/sneemy-logo.svg"
+import logo from "../../../../assets/sneemy-logo.svg"
 
 const MainNavigation = () => {
     return (
