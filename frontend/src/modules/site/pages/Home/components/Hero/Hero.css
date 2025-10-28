@@ -75,6 +75,7 @@
 
 .main-phone-wrapper {
     position: relative;
+    height: 100%;
 }
 
 .phone-frame {
@@ -92,4 +93,14 @@
     position: absolute;
     transform-origin: bottom left;
     transform: rotate(3deg);
+}
+
+.phone-content-frame {
+    width: 353px;
+    height: 753px;
+    background-color: rgb(20, 15, 20);
+    position: absolute;
+    left: 15px;
+    top: 10px;
+    border-radius: 40px;
 }
