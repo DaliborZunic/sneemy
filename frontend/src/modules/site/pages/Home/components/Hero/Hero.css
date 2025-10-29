@@ -21,8 +21,7 @@
 
 .hero-wrapper {
     padding-top: 170px;
-    height: 100%;
-    max-height:906px;
+    height:906px;
     background: linear-gradient(60deg, #4500a2 0%, #8c00e4 100%);
     color: #f4f0f7;
 }
@@ -85,14 +84,16 @@
 .front-phone-frame {
     fill: #944fdc;
     position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .back-phone-frame {
     fill: #732bbe;
-    left: 30px;
     position: absolute;
     transform-origin: bottom left;
-    transform: rotate(3deg);
+    left: calc(50% + 15px);
+    transform: translateX(-50%) rotate(3deg);
 }
 
 .phone-content-frame {
@@ -100,7 +101,8 @@
     height: 753px;
     background-color: rgb(20, 15, 20);
     position: absolute;
-    left: 15px;
+    left: calc(50%);
     top: 10px;
     border-radius: 40px;
+    transform: translateX(-50%);
 }

@@ -23,3 +23,40 @@
     line-height: 35px;
     margin-bottom: 10rem;
 }
+
+.services-text {
+    font-size: 1.2rem;
+    line-height: 2rem;
+    margin-bottom: 2rem;
+}
+
+.services-text:last-child {
+    margin-bottom: 0px;
+}
+
+.youtube-service-wrapper {
+    display: flex;
+}
+
+.text-column {
+    flex-basis: 295px;
+    flex-grow: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.videos-column {
+    flex-grow: 1;
+    display: flex;
+    justify-content: end;
+}
+
+.videos-column img {
+    width: 970px;
+}
+
+.youtube-service-logo {
+    width: 100px;
+    margin-bottom: 2rem;
+}
