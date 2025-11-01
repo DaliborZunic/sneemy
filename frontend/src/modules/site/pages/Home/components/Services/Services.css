@@ -1,26 +1,26 @@
 .services-section .section-content-wrapper {
-    max-width: 1300px;
+    max-width: 81.25rem;
     margin: 0 auto;
     height: 100%;
-    padding: 90px 0;
+    padding: 5.625rem 0;
 }
 
 .services-heading {
-    font-size: 55px;
+    font-size: 3.4375rem;
     text-align: center;
-    max-width: 1070px;
+    max-width: 66.875rem;
     margin: 0 auto;
     font-weight: 800;
 }
 
 .services-lead {
     display: block;
-    max-width: 1100px;
+    max-width: 68.75rem;
     text-align: center;
     margin: 0 auto;
-    margin-top: 40px;
+    margin-top: 2.5rem;
     font-size: 1.3rem;
-    line-height: 35px;
+    line-height: 2.1875rem;
     margin-bottom: 10rem;
 }
 
@@ -31,7 +31,7 @@
 }
 
 .services-text:last-child {
-    margin-bottom: 0px;
+    margin-bottom: 0rem;
 }
 
 .youtube-service-wrapper {
@@ -39,13 +39,13 @@
 }
 
 .social-networks-service-wrapper {
-    margin-top: 202px;
+    margin-top: 12.625rem;
     display: flex;
     gap: 7rem;
 }
 
 .text-column {
-    flex-basis: 295px;
+    flex-basis: 18.4375rem;
     flex-grow: 0;
     display: flex;
     flex-direction: column;
@@ -59,11 +59,11 @@
 }
 
 .videos-column img {
-    width: 970px;
+    width: 60.625rem;
 }
 
 .youtube-service-logo {
-    width: 100px;
+    width: 6.25rem;
     margin-bottom: 2rem;
 }
 
@@ -73,12 +73,11 @@
 
 .video-frame {
     background-color: rgb(35, 27, 36);
-    width: 750px;
-    height: 470px;
+    width: 46.875rem;
+    height: 29.375rem;
     position: absolute;
-    top: 35px;
-    left: 110px;
-
+    top: 2.1875rem;
+    left: 6.875rem;
 }
 
 .social-networks-service-wrapper .text-column .services-text {
@@ -94,7 +93,7 @@
 }
 
 .social-network-coror-icons-frame img {
-    width: 100px;
+    width: 6.25rem;
 }
 
 .social-networks-service-wrapper .videos-column {
@@ -105,7 +104,7 @@
 
 .social-networks-service-wrapper .videos-column img,
 .social-networks-service-wrapper .phone-frame {
-    width: 275px;
+    width: 17.1875rem;
 }
 
 .social-networks-service-wrapper .phone-frame {
@@ -124,11 +123,10 @@
 
 .phone-screen-frame {
     background-color: rgb(36, 18, 32);
-    width: 247px;
-    height: 539px;
+    width: 15.4375rem;
+    height: 33.6875rem;
     position: absolute;
-    border-radius: 25px;
-    top: 8px;
-    left: 14px;
-
+    border-radius: 1.5625rem;
+    top: 0.5rem;
+    left: 0.875rem;
 }

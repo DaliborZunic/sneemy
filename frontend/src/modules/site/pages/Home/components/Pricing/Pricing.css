@@ -4,10 +4,10 @@
 }
 
 .pricing-section .section-content-wrapper {
-    max-width: 1300px;
+    max-width: 81.25rem;
     margin: 0 auto;
     height: 100%;
-    padding: 90px 0;
+    padding: 5.625rem 0;
 }
 
 .pricing-table-wrapper {
@@ -18,9 +18,9 @@
 }
 
 .pricing-heading {
-    font-size: 55px;
+    font-size: 3.4375rem;
     text-align: center;
-    max-width: 1070px;
+    max-width: 66.875rem;
     margin: 0 auto;
     margin-bottom: 10rem;
     font-weight: 800;
@@ -34,7 +34,7 @@
 
 .price-circle {
     background-color: #340474;
-    width: 154px;
+    width: 9.625rem;
     aspect-ratio: 1;
     border-radius: 50%;
     display: grid;
@@ -62,16 +62,16 @@
 .price-item-link {
     text-decoration: none;
     display: block;
-    border: 1px solid #f4f0f7;
+    border: 0.0625rem solid #f4f0f7;
     color: #f4f0f7;
-    border-radius: 20px;
-    padding: .6rem 1.2rem;
+    border-radius: 1.25rem;
+    padding: 0.6rem 1.2rem;
     display: grid;
     place-items: center;
     margin-bottom: 1rem;
     text-transform: uppercase;
     font-weight: 800;
-    font-size: .9rem;
+    font-size: 0.9rem;
 }
 
 .price-item-link:last-child {
@@ -86,7 +86,7 @@
 .price-item-wrapper {
     background-image: linear-gradient(to bottom, #5c05d1, #4500a2);
     padding: 2.2rem;
-    border-radius: 20px;
+    border-radius: 1.25rem;
 }
 
 .price-item-wrapper ul {
@@ -100,17 +100,17 @@
 
 .price-item-wrapper ul li {
     position: relative;
-    margin-left: .8rem;
-    padding-left: .6rem;
+    margin-left: 0.8rem;
+    padding-left: 0.6rem;
 }
 
 .price-item-wrapper ul li::before {
     content: " ";
     position: absolute;
-    width: 22px;
-    height: 22px;
-    left: 10px;
-    top: 13px;
+    width: 1.375rem;
+    height: 1.375rem;
+    left: 0.625rem;
+    top: 0.8125rem;
     transform: translateY(-50%) translateX(-190%);
     background: url("/public/list-bullet.svg");
     background-size: contain;

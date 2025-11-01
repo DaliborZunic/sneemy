@@ -4,11 +4,11 @@
 }
 
 .footer-section .section-content-wrapper {
-    max-width: 1300px;
+    max-width: 81.25rem;
     margin: 0 auto;
     height: 100%;
-    padding: 25px 0;
-    border-top: 1px solid white;
+    padding: 1.5625rem 0;
+    border-top: 0.0625rem solid white;
 }
 
 .footer-section .logo path {
@@ -32,4 +32,5 @@
 
 .footer-info {
     max-width: 50%;
+    font-size: .85rem;
 }
