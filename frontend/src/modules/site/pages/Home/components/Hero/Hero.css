@@ -39,7 +39,7 @@
     font-weight: 800;
 }
 
-.hero-logo {
+.hero-wrapper svg {
     padding: 0 auto;
     margin-bottom: 25px;
 }

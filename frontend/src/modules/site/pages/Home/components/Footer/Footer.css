@@ -1,0 +1,35 @@
+.footer-section {
+    background-color: #4500a2;
+    color: white;
+}
+
+.footer-section .section-content-wrapper {
+    max-width: 1300px;
+    margin: 0 auto;
+    height: 100%;
+    padding: 25px 0;
+    border-top: 1px solid white;
+}
+
+.footer-section .logo path {
+    fill: white;
+}
+
+.footer-section .section-content-wrapper {
+    display: flex;
+}
+
+.left-footer-column {
+    width: 100%;
+}
+
+.right-footer-column {
+    width: 100%;
+    text-align: right;
+    display: flex;
+    justify-content: end;
+}
+
+.footer-info {
+    max-width: 50%;
+}

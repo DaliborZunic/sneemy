@@ -31,10 +31,6 @@
     font-weight: 400;
 }
 
-.main-navigation-wrapper .logo {
-    transform: translateY(3px);
-}
-
 .main-navigation .highlighted-nav-link {
     background-color: #fbfe00;
     color: #000;
