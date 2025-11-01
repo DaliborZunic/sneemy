@@ -1,20 +1,20 @@
 .main-navigation-wrapper {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  margin: 0rem auto 0;
-  margin-top: -5rem;
-  transform: translateY(3.125rem);
-  max-width: 81.25rem;
-  height: 4.9375rem;
-  background: black;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.6875rem;
-  border-radius: 2.5rem;
-  font-size: 1.1875rem;
-  box-shadow: rgba(0, 0, 0, 0.07) 0rem 0.0625rem 0.125rem, rgba(0, 0, 0, 0.07) 0rem 0.125rem 0.25rem, rgba(0, 0, 0, 0.07) 0rem 0.25rem 0.5rem, rgba(0, 0, 0, 0.07) 0rem 0.5rem 1rem, rgba(0, 0, 0, 0.07) 0rem 1rem 2rem, rgba(0, 0, 0, 0.07) 0rem 2rem 4rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    margin: 0rem auto 0;
+    margin-top: -5rem;
+    transform: translateY(3.125rem);
+    max-width: 1300px;
+    height: 4.9375rem;
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.6875rem;
+    border-radius: 2.5rem;
+    font-size: 1.1875rem;
+    box-shadow: rgba(0, 0, 0, 0.07) 0rem 0.0625rem 0.125rem, rgba(0, 0, 0, 0.07) 0rem 0.125rem 0.25rem, rgba(0, 0, 0, 0.07) 0rem 0.25rem 0.5rem, rgba(0, 0, 0, 0.07) 0rem 0.5rem 1rem, rgba(0, 0, 0, 0.07) 0rem 1rem 2rem, rgba(0, 0, 0, 0.07) 0rem 2rem 4rem;
 }
 
 .main-navigation {
@@ -36,4 +36,21 @@
     color: #000;
     padding: 0.25rem 0.8125rem;
     border-radius: 1.25rem;
+}
+
+@media (max-width: 1320px) {
+    .main-navigation-wrapper {
+        max-width: 1000px;
+        font-size: 1rem;
+        height: auto;
+        padding: .7rem .9rem;
+    }
+
+    .main-navigation-wrapper nav {
+        gap: 1.2rem;
+    }
+
+    .main-navigation-wrapper svg {
+        width: 10rem;
+    }
 }

@@ -26,8 +26,8 @@
     color: #f4f0f7;
 }
 
-.section-content-wrapper {
-    max-width: 81.25rem;
+.hero-wrapper .section-content-wrapper {
+    max-width: 1300px;
     margin: 0 auto;
     height: 100%;
 }
@@ -105,4 +105,14 @@
     top: 0.625rem;
     border-radius: 2.5rem;
     transform: translateX(-50%);
+}
+
+@media (max-width: 1320px) {
+    .section-content-wrapper {
+        max-width: 800px;
+    }
+
+    .hero-heading {
+        font-size: 3rem;
+    }
 }

@@ -1,7 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;800;display=swap');
 
 .site-root {
-  font-family: 'Outfit', sans-serif;
-  height: 100%;
-  font-weight: 400;
+    font-family: 'Outfit', sans-serif;
+    height: 100%;
+    font-weight: 400;
+}
+
+@media (max-width: 1320px) {
+    .section-content-wrapper {
+        max-width: 1000px !important;
+        padding-left: 3rem !important;
+        padding-right: 3rem !important
+    }
 }

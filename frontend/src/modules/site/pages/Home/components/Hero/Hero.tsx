@@ -1,5 +1,4 @@
 import "./Hero.css";
-import sneemyLogo from "../../../../../../assets/sneemy-logo.svg";
 import tikTokLogo from "../../../../../../assets/tiktok-logo.svg";
 import youTubeLogo from "../../../../../../assets/youtube-logo.svg";
 import instagramLogo from "../../../../../../assets/instagram-logo.svg";
