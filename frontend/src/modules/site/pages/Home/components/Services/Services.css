@@ -175,3 +175,61 @@
         flex-basis: 57%;
     }
 }
+
+@media (max-width: 1020px) {
+    .youtube-service-wrapper {
+        flex-direction: column;
+        gap: 5rem;
+    }
+
+    .videos-column {
+        justify-content: center;
+    }
+
+    .video-laptop-frame {
+        max-width: 95%;
+    }
+
+    .videos-column img {
+        max-width: 100%;
+    }
+
+    .video-frame {
+        width: 77%;
+        height: 83%;
+        position: absolute;
+        top: 6%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .social-networks-service-wrapper {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 4rem;
+    }
+
+    .social-networks-service-wrapper .text-column .services-text {
+        text-align: left;
+    }
+
+    .social-network-coror-icons-frame {
+        justify-content: start;
+    }
+
+    .social-networks-service-wrapper .phones-frame {
+        justify-content: center;
+    }
+
+    .pricing-section .section-content-wrapper {
+        padding-bottom: 2rem;
+    }
+
+    .phone-screen-frame {
+        width: 91%;
+        height: 97%;
+        border-radius: 1.5625rem;
+        top: 1%;
+        left: 5%;
+    }
+}

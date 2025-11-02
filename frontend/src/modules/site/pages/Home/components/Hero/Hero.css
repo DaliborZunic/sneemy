@@ -120,10 +120,26 @@
 @media (max-width: 1020px) {
     .hero-wrapper {
         padding-top: 10.625rem;
+        padding-bottom: 5rem;
         height: auto;
     }
 
     .hero-wrapper .row {
         flex-direction: column;
+    }
+
+    .phone-frame {
+        width: 18rem;
+    }
+
+    .phone-content-frame {
+        width: 16.5rem;
+        height: 35.2rem;
+        background-color: rgb(20, 15, 20);
+        position: absolute;
+        left: calc(50%);
+        top: 0.625rem;
+        border-radius: 2rem;
+        transform: translateX(-50%);
     }
 }

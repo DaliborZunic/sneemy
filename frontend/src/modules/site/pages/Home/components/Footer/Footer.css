@@ -40,3 +40,17 @@
         width: 10rem;
     }
 }
+
+@media (max-width: 1020px) {
+    .footer-section .section-content-wrapper {
+        flex-direction: column;
+    }
+
+    .left-footer-column,
+    .right-footer-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}

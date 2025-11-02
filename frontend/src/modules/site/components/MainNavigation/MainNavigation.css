@@ -55,3 +55,9 @@
         width: 10rem;
     }
 }
+
+@media (max-width: 1020px) {
+    .main-navigation-wrapper {
+        max-width: 600px;
+    }
+}
