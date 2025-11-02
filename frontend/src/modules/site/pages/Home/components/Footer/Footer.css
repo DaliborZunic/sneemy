@@ -34,3 +34,9 @@
     max-width: 55%;
     font-size: .85rem;
 }
+
+@media (max-width: 1320px) {
+    .footer-section svg {
+        width: 10rem;
+    }
+}
