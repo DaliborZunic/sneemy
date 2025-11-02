@@ -130,3 +130,48 @@
     top: 0.5rem;
     left: 0.875rem;
 }
+
+@media (max-width: 1320px) {
+    .videos-column img {
+        width: 30rem;
+    }
+
+    .video-frame {
+        width: 23.2rem;
+        height: 14.7em;
+        position: absolute;
+        top: 1rem;
+        left: 3.4rem;
+    }
+
+    .services-lead {
+        margin-bottom: 6rem;
+    }
+
+    .social-networks-service-wrapper .videos-column img,
+    .social-networks-service-wrapper .phone-frame {
+        width: 13rem;
+    }
+
+    .phone-screen-frame {
+        width: 11.8rem;
+        height: 25.6rem;
+        top: 0.3rem;
+        left: 0.6rem;
+        border-radius: 1.3rem;
+    }
+
+    .social-networks-service-wrapper {
+        margin-top: 6rem;
+        gap: 1rem;
+    }
+
+    .social-networks-service-wrapper .phones-frame {
+        gap: 1rem;
+        justify-content: start;
+    }
+
+    .social-networks-service-wrapper .videos-column {
+        flex-basis: 57%;
+    }
+}
