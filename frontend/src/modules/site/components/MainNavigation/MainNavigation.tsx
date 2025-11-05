@@ -17,8 +17,8 @@ const MainNavigation = () => {
             <SneemyLogo logoColorHex="#FBFE00" />
             <nav className={`main-navigation ${menuShown ? "menu-shown" : ""}`}>
                 <Link to="/">Home</Link>
-                <Link to="/about-us">About Us</Link>
-                <Link className="highlighted-nav-link" to="/">Naruči video</Link>
+                <Link to="/payment-form">About Us</Link>
+                <Link className="highlighted-nav-link" to="/payment-form">Naruči video</Link>
             </nav>
             <div className="hamburger-icon-wrapper" onClick={handleHamburgerClick}>
                 { !menuShown ? <img className="hamburger-icon" src={hamburgerIcon} alt="hamburger icon" /> : menuShown && <img className="hamburger-icon" src={closeIcon} alt="close icon" /> }
