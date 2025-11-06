@@ -2,6 +2,7 @@ import "./SiteApp.css";
 import { Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import MainNavigation from "./components/MainNavigation/MainNavigation";
+import Footer from "./pages/Home/components/Footer/Footer";
 
 const Home = lazy(() => import("./pages/Home/Home"));
 const PaymentForm = lazy(() => import("./pages/PaymentForm/PaymentForm"));
@@ -9,6 +10,7 @@ const PaymentForm = lazy(() => import("./pages/PaymentForm/PaymentForm"));
 export default function SiteApp() {
   return (
     <div className="site-root">
+      <MainNavigation />
       <MainNavigation />
       
       <Suspense fallback={<div>Loading site...</div>}>
@@ -18,6 +20,7 @@ export default function SiteApp() {
           <Route path="*" element={<div>404 – Page not found</div>} />
         </Routes>
       </Suspense>
+      <Footer />
     </div>
   );
 }
