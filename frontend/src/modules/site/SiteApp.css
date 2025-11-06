@@ -5,6 +5,8 @@
     height: 100%;
     font-weight: 400;
     overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
 }
 
 @media (max-width: 1320px) {

@@ -1,7 +1,7 @@
 .payment-form-section {
     background-color: #4500a2;
     color: #f4f0f7;
-    height: 100.1%;
+    flex-grow: 1;
 }
 
 .payment-form-section .section-content-wrapper {
@@ -9,6 +9,7 @@
     margin: 0 auto;
     height: 100%;
     padding: 13rem 0;
+    padding-bottom: 3rem;
 }
 
 .payment-form-section h1 {
