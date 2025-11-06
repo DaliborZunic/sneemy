@@ -11,7 +11,6 @@ export default function SiteApp() {
   return (
     <div className="site-root">
       <MainNavigation />
-      <MainNavigation />
       
       <Suspense fallback={<div>Loading site...</div>}>
         <Routes>
