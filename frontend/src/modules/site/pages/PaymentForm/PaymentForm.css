@@ -90,6 +90,21 @@
     font-family: 'Outfit', sans-serif;
 }
 
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+}
+
+.checkbox-icon {
+    width: 20px;
+}
+
+.checkbox-label {
+    font-weight: 800;
+    font-size: 1.1rem;
+}
+
 @media (max-width: 1320px) {
     .section-content-wrapper {
         max-width: 1000px !important;
