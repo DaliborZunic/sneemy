@@ -1,4 +1,3 @@
-import Footer from "./components/Footer/Footer";
 import Hero from "./components/Hero/Hero";
 import Pricing from "./components/Pricing/Pricing";
 import Services from "./components/Services/Services";
