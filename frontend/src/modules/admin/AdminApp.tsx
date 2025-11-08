@@ -1,35 +1,50 @@
 import "./AdminApp.css";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useLocation } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import sneemyLogoCRM from "../../assets/sneemy-erp-logo.svg";
 import ordersIcon from "../../assets/orders-icon.svg";
 
-const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Orders = lazy(() => import("./pages/Orders/Orders"));
 const Users = lazy(() => import("./pages/Users"));
 
 export default function AdminApp() {
+  const location = useLocation();
+
   return (
     <div className="admin-root">
       <div className="sidebar">
         <div className="sidebar-header">
           <img className="crm-logo" src={sneemyLogoCRM} alt="" />
         </div>
+
         <div className="sidebar-links">
-          <div className="sidebar-link">
+          <Link
+            to="/admin"
+            className={`sidebar-link${
+              location.pathname === "/admin" ? " active" : ""
+            }`}
+          >
             <img src={ordersIcon} alt="" />
-            <Link to="/admin">Narudžbe</Link>
-          </div>
-          <div className="sidebar-link">
+            <span>Narudžbe</span>
+          </Link>
+
+          <Link
+            to="/admin/users"
+            className={`sidebar-link${
+              location.pathname === "/admin/users" ? " active" : ""
+            }`}
+          >
             <img src={ordersIcon} alt="" />
-            <Link to="/admin/users">Novi link</Link>
-          </div>
+            <span>Novi link</span>
+          </Link>
         </div>
       </div>
+
       <div className="main-content">
         <Suspense fallback={<div>Loading admin...</div>}>
           <Routes>
-            <Route index element={<Dashboard />} />
-            <Route path="dashboard" element={<Dashboard />} />
+            <Route index element={<Orders />} />
+            <Route path="orders" element={<Orders />} />
             <Route path="users" element={<Users />} />
             <Route path="*" element={<div>404 – Admin section</div>} />
           </Routes>

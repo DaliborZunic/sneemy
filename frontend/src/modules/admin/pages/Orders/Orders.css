@@ -1,0 +1,16 @@
+.admin-root .main-content-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.admin-root .hamburger-icon {
+    width: 30px;
+    display: none;
+}
+
+@media (max-width: 1020px) {
+    .admin-root .hamburger-icon {
+        display: block;
+    }
+}

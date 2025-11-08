@@ -1,7 +1,11 @@
+import hamburgerIcon from "../../../../assets/hamburger-icon.svg"
+import "./Orders.css"
+
 export default function Dashboard() {
   return (
     <section>
       <div className="main-content-header">
+        <img className="hamburger-icon" src={hamburgerIcon} alt="hamburger icon" />
         <h1>Narudžbe</h1>
       </div>
       <table>

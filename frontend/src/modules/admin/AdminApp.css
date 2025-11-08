@@ -9,22 +9,25 @@
 .sidebar {
   background-color: #fafafa;
   flex-basis: 14rem;
-  padding: 2rem 1rem;
   border-right: 1px solid #dddddd;
 }
 
 .sidebar-links {
   display: flex;
   flex-direction: column;
-  gap: .8rem;
 }
 
 .sidebar-link {
   display: flex;
-  gap: .3rem;
+  gap: .6rem;
+  height: 2.8rem;
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+  border-left: 3px solid transparent;
 }
 
-.sidebar-link a {
+.sidebar-link {
   text-decoration: none;
   color: #000;
 }
@@ -36,7 +39,8 @@
 }
 
 .crm-logo {
-margin-bottom: 2rem;
+  margin-bottom: 2rem;
+  width: 75%;
 }
 
 .sidebar-links {
@@ -44,10 +48,15 @@ margin-bottom: 2rem;
   flex-direction: column;
 }
 
-.sidebar-header,
-.main-content-header {
+.sidebar-header {
   height: 4rem;
   margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+.sidebar-link.active {
+  background: linear-gradient(to right, #e0e0e0 0%, transparent 100%);
+  border-left: 3px solid #000;
 }
 
 table {
@@ -64,4 +73,20 @@ table th,
 table td {
   text-align: left;
   padding-left: .8rem;
+}
+
+@media (max-width: 1020px) {
+  .admin-root table {
+    width: 100%;
+  }
+
+  .main-content {
+    padding: 2rem 1rem !important;
+  }
+
+  .sidebar {
+    position: absolute;
+    height: 100%;
+    width: 15rem;
+  }
 }
