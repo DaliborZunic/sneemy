@@ -1,6 +1,6 @@
 import "./AdminApp.css";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
-import { Suspense, lazy, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import sneemyLogoCRM from "../../assets/sneemy-erp-logo.svg";
 import ordersIcon from "../../assets/orders-icon.svg";
 import hamburgerIcon from "../../assets/hamburger-icon-crm.svg";
@@ -34,9 +34,8 @@ export default function AdminApp() {
           <Link
             to="/admin"
             onClick={closeSidebar}
-            className={`sidebar-link${
-              location.pathname === "/admin" ? " active" : ""
-            }`}
+            className={`sidebar-link${location.pathname === "/admin" ? " active" : ""
+              }`}
           >
             <img src={ordersIcon} alt="" />
             <span>Narudžbe</span>
@@ -45,9 +44,8 @@ export default function AdminApp() {
           <Link
             to="/admin/users"
             onClick={closeSidebar}
-            className={`sidebar-link${
-              location.pathname === "/admin/users" ? " active" : ""
-            }`}
+            className={`sidebar-link${location.pathname === "/admin/users" ? " active" : ""
+              }`}
           >
             <img src={ordersIcon} alt="" />
             <span>Novi link</span>
