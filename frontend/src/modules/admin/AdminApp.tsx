@@ -19,6 +19,16 @@ export default function AdminApp() {
 
   const closeSidebar = () => setSidebarShown(false);
 
+  useEffect(() => {
+  const fetchWeather = async () => {
+    const res = await fetch('/api/WeatherForecast');
+    const data = await res.json();
+    console.log(data);
+  };
+
+  fetchWeather();
+}, []);
+
   return (
     <div className="admin-root">
       <div className={`sidebar${sidebarShown ? " active" : ""}`}>

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36616.10 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sneemy.API", "backend\Sneemy.API\Sneemy.API.csproj", "{5414ECB0-9FF8-4C9F-A7DC-351A1E399A3D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sneemy.API", "backend\Sneemy.API.csproj", "{5414ECB0-9FF8-4C9F-A7DC-351A1E399A3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
