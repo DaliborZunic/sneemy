@@ -1,6 +1,18 @@
+import { useEffect } from "react";
 import "./Orders.css"
+import { useAuth } from "../../../../auth/AuthContext";
+import api from "../../../../api";
 
 export default function Dashboard() {
+    const { token } = useAuth();
+    useEffect(() => {
+        if (token) {
+            api.get("/WeatherForecast")
+                .then((res: any) => console.log("Weather data:", res.data))
+                .catch((err: any) => console.error("Weather call failed:", err));
+        }
+    }, [token]);
+    
     return (
         <section>
             <h1>Narudžbe</h1>
