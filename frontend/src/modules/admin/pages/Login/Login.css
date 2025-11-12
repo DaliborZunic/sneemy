@@ -35,7 +35,8 @@
 }
 
 .login-form .crm-logo {
-    width: 100%;
+    width: 70%;
+    margin-bottom: 1.1rem;
 }
 
 input {
@@ -67,5 +68,9 @@ input {
     .login-form-wrapper {
         border: none;
         padding: 2.5rem;
+    }
+
+    .login-form .crm-logo {
+        margin-bottom: 2.2rem;
     }
 }
