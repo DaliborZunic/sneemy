@@ -1,0 +1,62 @@
+.login-wrapper {
+    height: 100%;
+    font-family: 'Outfit', sans-serif;
+}
+
+.login-wrapper .login-form-wrapper .login-form {
+    font-family: 'Outfit', sans-serif;
+}
+
+.login-wrapper {
+    display: grid;
+    place-items: center;
+}
+
+.login-form-wrapper {
+    max-width: 26rem;
+    width: 100%;
+    padding: 5rem;
+    border: 1px solid #dfdfdf;
+    border-radius: 5px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+}
+
+.login-form .crm-logo {
+    width: 100%;
+}
+
+input {
+    height: 2rem;
+    padding-left: .5rem;
+    border: 1px solid #dfdfdf;
+    border-radius: 5px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+}
+
+button {
+    width: 100%;
+    height: 2.2rem;
+    background-color: #000;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    border: 1px solid #dfdfdf;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.login-button {
+    margin-top: 1rem;
+}

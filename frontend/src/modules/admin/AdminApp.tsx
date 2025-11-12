@@ -54,7 +54,6 @@ export default function AdminApp() {
 
           <button
             onClick={logout}
-            style={{ marginLeft: "1rem", marginTop: "2rem" }}
             className="btn btn-sm btn-outline-secondary"
           >
             Odjava

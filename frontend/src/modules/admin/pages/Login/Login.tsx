@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../../auth/AuthContext";
+import sneemyLogoCRM from "../../../../assets/sneemy-erp-logo.svg";
 import "./Login.css";
 
 const Login = () => {
@@ -30,31 +31,40 @@ const Login = () => {
 
   return (
     <div className="login-wrapper">
-      <form onSubmit={handleSubmit} className="login-form">
-        <h2>Dashboard Login</h2>
+      <div className="login-form-wrapper">
+        <form onSubmit={handleSubmit} className="login-form">
+          <img className="crm-logo" src={sneemyLogoCRM} alt="" />
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
 
-        <label>Email</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
 
-        <label>Password</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+          {error && <p className="error-text">{error}</p>}
 
-        {error && <p className="error-text">{error}</p>}
-
-        <button type="submit" disabled={loading}>
-          {loading ? "Signing in..." : "Login"}
-        </button>
-      </form>
+          <div className="form-actions">
+            <button className="login-button" type="submit" disabled={loading}>
+              {loading ? "Signing in..." : "Login"}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
