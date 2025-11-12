@@ -60,3 +60,10 @@ button {
 .login-button {
     margin-top: 1rem;
 }
+
+@media (max-width: 1020px) {
+    .login-form-wrapper {
+        border: none;
+        padding: 2.5rem;
+    }
+}

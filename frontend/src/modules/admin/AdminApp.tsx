@@ -79,9 +79,6 @@ export default function AdminApp() {
 
   return (
     <Routes>
-      {/* Public admin login page */}
-      <Route path="login" element={<Login />} />
-
       {/* Protected admin area */}
       <Route element={<ProtectedRoute />}>
         <Route element={<AdminLayout />}>
