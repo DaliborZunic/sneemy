@@ -1,5 +1,4 @@
 .user-avatar-wrapper {
-    margin: .4rem;
     padding: .3rem;
     border-radius: .5rem;
     display: flex;
@@ -7,7 +6,7 @@
 }
 
 .user-avatar-wrapper:hover {
-    background-color: red;
+    background-color: #f5f5f5;
 }
 
 .avatar-image-wrapper {
