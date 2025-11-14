@@ -23,82 +23,16 @@
     color: #fff;
 }
 
-.sidebar {
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -o-user-select: none;
-  user-select: none;
-
-
-  background-color: #fafafa;
-  flex-basis: 14rem;
-  border-right: 1px solid #dddddd;
-
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar-links {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-
-.sidebar-link {
-  display: flex;
-  gap: .6rem;
-  height: 2.8rem;
-  display: flex;
-  align-items: center;
-  padding-left: 1rem;
-  border-left: 3px solid transparent;
-}
-
-.sidebar-link {
-  text-decoration: none;
-  color: #000;
-}
-
 .main-content {
   flex-grow: 1;
 }
 
-.crm-logo {
-  margin-bottom: 2rem;
-  width: 75%;
-}
-
-.sidebar-links {
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar-header .close-icon-wrapper {
-  position: absolute;
-  top: 1rem;
-  right: 0;
-  transform: translateX(150%);
-}
-
-.sidebar-header,
 .main-content-header {
   height: 4rem;
   margin-bottom: 1rem;
   padding: 1rem;
-}
-
-.main-content-header {
   background-color: #fafafa;
   border-bottom: 1px solid #dddddd;
-}
-
-.sidebar-link.active {
-  background: linear-gradient(to right, #e0e0e0 0%, transparent 100%);
-  border-left: 3px solid #000;
-}
-
-.admin-root .main-content-header {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -135,39 +69,9 @@ table td {
   padding-left: .8rem;
 }
 
-.user-avatar-wrapper {
-  background-color: red;
-  margin: .4rem;
-  padding: .3rem;
-  border-radius: .5rem;
-}
-
-.avatar-image-wrapper {
-  width: 2rem;
-  aspect-ratio: 1;
-  background-color: #000;
-  color: #fff;
-  border-radius: .5rem;
-  display: grid;
-  place-items: center;
-  font-size: .8rem;
-  font-weight: 800;
-}
-
 @media (max-width: 1020px) {
   .admin-root table {
     width: 100%;
-  }
-
-  .sidebar {
-    position: absolute;
-    height: 100%;
-    width: 15rem;
-    display: none;
-  }
-
-  .sidebar.active {
-    display: flex;
   }
 
   .admin-root .hamburger-icon,

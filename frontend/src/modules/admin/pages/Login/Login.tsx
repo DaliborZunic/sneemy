@@ -23,7 +23,7 @@ const Login = () => {
     setLoading(false);
 
     if (ok) {
-      navigate("/admin/orders", { replace: true });
+      navigate("/admin", { replace: true });
     } else {
       setError("Invalid credentials");
     }
