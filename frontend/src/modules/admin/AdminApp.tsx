@@ -5,9 +5,9 @@ import sneemyLogoCRM from "../../assets/sneemy-erp-logo.svg";
 import ordersIcon from "../../assets/orders-icon.svg";
 import hamburgerIcon from "../../assets/hamburger-icon-crm.svg";
 import closeIcon from "../../assets/close-icon-crm.svg";
+import moreItemsIcon from "../../assets/more-items-icon.svg";
 import { useAuth } from "../../auth/AuthContext";
 import ProtectedRoute from "../../auth/ProtectedRoute";
-import Login from "./pages/Login/Login"; 
 
 const Orders = lazy(() => import("./pages/Orders/Orders"));
 const Users = lazy(() => import("./pages/Users"));
@@ -59,6 +59,12 @@ export default function AdminApp() {
             Odjava
           </button>
         </div>
+        <div className="user-avatar-wrapper">
+            <div className="avatar-image-wrapper">
+              <span>DŽ</span>
+            </div>
+              <img src={moreItemsIcon} alt="" />
+          </div>
       </div>
 
       <div className="main-content">

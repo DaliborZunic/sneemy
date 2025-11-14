@@ -34,11 +34,15 @@
   background-color: #fafafa;
   flex-basis: 14rem;
   border-right: 1px solid #dddddd;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar-links {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
 }
 
 .sidebar-link {
@@ -131,6 +135,25 @@ table td {
   padding-left: .8rem;
 }
 
+.user-avatar-wrapper {
+  background-color: red;
+  margin: .4rem;
+  padding: .3rem;
+  border-radius: .5rem;
+}
+
+.avatar-image-wrapper {
+  width: 2rem;
+  aspect-ratio: 1;
+  background-color: #000;
+  color: #fff;
+  border-radius: .5rem;
+  display: grid;
+  place-items: center;
+  font-size: .8rem;
+  font-weight: 800;
+}
+
 @media (max-width: 1020px) {
   .admin-root table {
     width: 100%;
@@ -144,7 +167,7 @@ table td {
   }
 
   .sidebar.active {
-    display: block;
+    display: flex;
   }
 
   .admin-root .hamburger-icon,
