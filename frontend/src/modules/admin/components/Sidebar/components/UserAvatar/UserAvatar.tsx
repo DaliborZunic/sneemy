@@ -7,7 +7,13 @@ export default function UserAvatar() {
             <div className="avatar-image-wrapper">
                 <span>DŽ</span>
             </div>
-            <img src={moreItemsIcon} alt="" />
+            <div className="user-info-wrapper">
+                <span className="user-name">Dalibor Žunić</span>
+                <span className="user-role">Admin</span>
+            </div>
+            <div className="icon-pressable-wrapper">
+                <img src={moreItemsIcon} alt="" />
+            </div>
         </div>
     );
 }

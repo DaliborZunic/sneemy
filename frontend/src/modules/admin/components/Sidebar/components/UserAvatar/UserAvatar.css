@@ -1,18 +1,45 @@
 .user-avatar-wrapper {
-    background-color: red;
     margin: .4rem;
     padding: .3rem;
     border-radius: .5rem;
+    display: flex;
+    gap: .3rem;
+}
+
+.user-avatar-wrapper:hover {
+    background-color: red;
 }
 
 .avatar-image-wrapper {
     width: 2rem;
-    aspect-ratio: 1;
+    height: 2rem;
     background-color: #000;
     color: #fff;
     border-radius: .5rem;
     display: grid;
     place-items: center;
     font-size: .8rem;
+    font-weight: 800;
+}
+
+.icon-pressable-wrapper {
+    display: grid;
+    place-items: center;
+}
+
+.icon-pressable-wrapper img {
+    height: 1.2rem;
+}
+
+.user-info-wrapper {
+    font-size: .875rem;
+    line-height: .875rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.user-info-wrapper .user-name {
     font-weight: 800;
 }
