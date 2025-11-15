@@ -3,10 +3,12 @@
     border-radius: .5rem;
     display: flex;
     gap: .3rem;
+    position: relative;
 }
 
 .user-avatar-wrapper:hover {
     background-color: #f5f5f5;
+    cursor: pointer;
 }
 
 .avatar-image-wrapper {
@@ -41,4 +43,49 @@
 
 .user-info-wrapper .user-name {
     font-weight: 800;
+}
+
+.user-menu-wrapper {
+    width: 100%;
+    background-color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateY(-140%);
+    border: 1px solid #dddddd;
+    border-radius: .5rem;
+    overflow: hidden;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+}
+
+.user-menu-item-icon-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.user-menu-item {
+    display: flex;
+    align-items: center;
+    padding: .5rem .5rem;
+    cursor: pointer;
+}
+
+.user-menu-item:hover {
+    background-color: #f5f5f5;
+}
+
+.user-menu-item img {
+    height: 1.1rem;
+}
+
+.user-avatar-wrapper .img-wrapper {
+ display: flex;
+ width: 1.3rem;
+}
+
+@media (max-width: 1020px) {
+    .user-menu-item {
+        height: 2.6rem;
+        font-size: 1rem;
+    }
 }

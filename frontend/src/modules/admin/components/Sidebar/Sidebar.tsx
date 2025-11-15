@@ -60,16 +60,9 @@ export default function Sidebar({
                     </svg>
                     <span>Novi link</span>
                 </Link>
-
-                <button
-                    onClick={logout}
-                    className="btn btn-sm btn-outline-secondary"
-                >
-                    Odjava
-                </button>
             </div>
 
-            <UserAvatar />
+            <UserAvatar logout={logout} />
         </div>
     );
 }

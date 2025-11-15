@@ -1,9 +1,21 @@
 import "./UserAvatar.css";
 import moreItemsIcon from "../../../../../../assets/more-items-icon.svg";
+import UserAvatarMenu from "./components/UserAvatarMenu/UserAvatarMenu";
+import { useState } from "react";
 
-export default function UserAvatar() {
+interface UserAvatarProps {
+    logout: () => void;
+}
+
+export default function UserAvatar({logout}: UserAvatarProps) {
+    const [menuShown, setMenuShown] = useState<boolean>(false);
+
+    const onSetMenuShown = () => {
+        setMenuShown(prev => !prev)
+    }
+
     return (
-        <div className="user-avatar-wrapper">
+        <div className="user-avatar-wrapper" onClick={onSetMenuShown}>
             <div className="avatar-image-wrapper">
                 <span>DŽ</span>
             </div>
@@ -14,6 +26,8 @@ export default function UserAvatar() {
             <div className="icon-pressable-wrapper">
                 <img src={moreItemsIcon} alt="" />
             </div>
+            {menuShown && <UserAvatarMenu logout={logout} />}
+            
         </div>
     );
 }
