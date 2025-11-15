@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Sneemy.API.Models;
-using System.Reflection.Emit;
 
 namespace Sneemy.API.Data
 {
@@ -12,12 +11,17 @@ namespace Sneemy.API.Data
         {
         }
 
+        public DbSet<Order> Orders { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
             // Customize Identity table names (optional)
             builder.Entity<User>().ToTable("Users");
+
+            // Optional: map Orders table name
+            builder.Entity<Order>().ToTable("Orders");
         }
     }
 }

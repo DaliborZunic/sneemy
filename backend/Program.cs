@@ -2,10 +2,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using Sneemy.API.Data;
-using Sneemy.API.Models;
 using Sneemy.API.Interfaces;
+using Sneemy.API.Models;
+using Sneemy.API.Services;
+using System.Text;
 
 namespace Sneemy.API
 {
@@ -59,6 +60,7 @@ namespace Sneemy.API
             builder.Services.AddScoped<IJwtService, JwtService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IOrderService, OrderService>();
 
             // Services
             builder.Services.AddControllers();
