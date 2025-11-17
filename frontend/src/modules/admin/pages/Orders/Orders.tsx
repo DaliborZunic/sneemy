@@ -1,38 +1,71 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./Orders.css"
 import { useAuth } from "../../../../auth/AuthContext";
 import api from "../../../../api";
 
+export interface Order {
+    id: string;
+    nameAndLastName: string;
+    eMail: string;
+    phoneNumber: string | null;
+    website: string | null;
+    customerRequest: string | null;
+    isR1Reciept: boolean;
+    companyName: string | null;
+    companyOIB: string | null;
+    createdAt: string;
+}
+
+const formatOrderDate = (isoDate: string) => {
+    if (!isoDate) return "-";
+    return new Date(isoDate).toLocaleString("hr-HR", {
+        year: "numeric",
+        month: "narrow",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+};
+
+
 export default function Dashboard() {
     const { token } = useAuth();
+    const [orders, setOrders] = useState<Order[]>([]);
+
     useEffect(() => {
         if (token) {
-            api.get("/WeatherForecast")
-                .then((res: any) => console.log("Weather data:", res.data))
-                .catch((err: any) => console.error("Weather call failed:", err));
+            api.get("/Orders")
+                .then((res: any) => {
+                    console.log("Data:", res.data);
+                    setOrders(res.data);
+                })
+                .catch((err: any) => console.error("Data call failed:", err));
         }
     }, [token]);
-    
+
     return (
-        <section>
+        <section className="orders-wrapper">
             <h1>Narudžbe</h1>
-            <table>
-                <tr>
-                    <th>Ime i prezime</th>
-                    <th>e-mail</th>
-                    <th>Status</th>
-                </tr>
-                <tr>
-                    <td>Alfreds Futterkiste</td>
-                    <td>Maria Anders</td>
-                    <td>Germany</td>
-                </tr>
-                <tr>
-                    <td>Centro comercial Moctezuma</td>
-                    <td>Francisco Chang</td>
-                    <td>Mexico</td>
-                </tr>
-            </table>
+            <div className="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Ime i prezime</th>
+                        <th>e-mail</th>
+                        <th>Web stranica</th>
+                        <th>Vrijeme narudžbe</th>
+                    </tr>
+                    {
+                        orders.map(order => <tr key={order.id}>
+                            <td>{order.nameAndLastName}</td>
+                            <td>{order.eMail}</td>
+                            <td>{order.website || "-"}</td>
+                            <td>{formatOrderDate(order.createdAt)}</td>
+
+                        </tr>)
+                    }
+                </table>
+            </div>
+
         </section>
     );
 }

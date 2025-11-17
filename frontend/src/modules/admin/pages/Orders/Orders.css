@@ -1,0 +1,19 @@
+.orders-wrapper .table-wrapper {
+    overflow-x: auto;
+    max-width: fit-content;
+    width: 100%;
+}
+
+.orders-wrapper .table-wrapper table {
+    min-width: 550px;
+}
+
+.orders-wrapper {
+    width: 100%;
+}
+
+@media (max-width: 1020px) {
+    .orders-wrapper .table-wrapper table tr {
+        height: 3rem;
+    }
+}

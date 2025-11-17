@@ -9,17 +9,24 @@ import Sidebar from "./components/Sidebar/Sidebar";
 const Orders = lazy(() => import("./pages/Orders/Orders"));
 const Users = lazy(() => import("./pages/Users"));
 
-export default function AdminApp() {
+interface AdminLayoutProps {
+    sidebarShown: boolean;
+    onHamburgerClick: () => void;
+    closeSidebar: () => void;
+    logout: () => void;
+}
+
+function AdminLayout({
+    sidebarShown,
+    onHamburgerClick,
+    closeSidebar,
+    logout,
+}: AdminLayoutProps) {
     const location = useLocation();
-    const { logout } = useAuth();
-    const [sidebarShown, setSidebarShown] = useState<boolean>(false);
 
-    const onHamburgerClick = () => setSidebarShown((prev) => !prev);
-    const closeSidebar = () => setSidebarShown(false);
-
-    const AdminLayout = () => (
+    return (
         <div className="admin-root">
-            <Sidebar 
+            <Sidebar
                 sidebarShown={sidebarShown}
                 currentPath={location.pathname}
                 onHamburgerClick={onHamburgerClick}
@@ -42,12 +49,28 @@ export default function AdminApp() {
             </div>
         </div>
     );
+}
+
+export default function AdminApp() {
+    const { logout } = useAuth();
+    const [sidebarShown, setSidebarShown] = useState(false);
+
+    const onHamburgerClick = () => setSidebarShown(prev => !prev);
+    const closeSidebar = () => setSidebarShown(false);
 
     return (
         <Routes>
-            {/* Protected admin area */}
             <Route element={<ProtectedRoute />}>
-                <Route element={<AdminLayout />}>
+                <Route
+                    element={
+                        <AdminLayout
+                            sidebarShown={sidebarShown}
+                            onHamburgerClick={onHamburgerClick}
+                            closeSidebar={closeSidebar}
+                            logout={logout}
+                        />
+                    }
+                >
                     <Route index element={<Orders />} />
                     <Route path="orders" element={<Orders />} />
                     <Route path="users" element={<Users />} />
@@ -55,7 +78,6 @@ export default function AdminApp() {
                 </Route>
             </Route>
 
-            {/* Default redirect */}
             <Route path="*" element={<Navigate to="/admin" replace />} />
         </Routes>
     );
