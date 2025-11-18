@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
@@ -6,29 +6,47 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 
+	<!-- SPA BUILD SETTINGS -->
+	<PropertyGroup>
+		<!-- Path from backend project to your frontend folder -->
+		<SpaRoot>../frontend/</SpaRoot>
+		<!-- After Vite runs, dist/ contains the production build -->
+		<SpaDist>$(SpaRoot)dist/</SpaDist>
+	</PropertyGroup>
+
+	<!-- Build the frontend before publish -->
+	<Target Name="BuildFrontend" BeforeTargets="Publish">
+		<Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+		<Exec WorkingDirectory="$(SpaRoot)" Command="npm run build" />
+	</Target>
+
+	<!-- Copy built frontend directly into the publish/wwwroot folder -->
+	<Target Name="CopySpaToPublish" AfterTargets="Publish">
+		<!-- Now that dist exists, capture all files -->
+		<ItemGroup>
+			<SpaFiles Include="$(SpaDist)**" />
+		</ItemGroup>
+
+		<!-- Ensure wwwroot exists inside the publish directory -->
+		<MakeDir Directories="$(PublishDir)wwwroot" />
+
+		<!-- Copy SPA files into publish/wwwroot -->
+		<Copy
+		  SourceFiles="@(SpaFiles)"
+		  DestinationFolder="$(PublishDir)wwwroot\%(RecursiveDir)" />
+	</Target>
+
+	<!-- BACKEND PACKAGES -->
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0">
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		  <PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.0" />
 	</ItemGroup>
-
-	<!-- Copy the Vite build (frontend/dist) into wwwroot during publish -->
-	<ItemGroup>
-		<!-- Path is from backend/Sneemy.API/ to frontend/dist -->
-		<SpaFiles Include="..\..\frontend\dist\**\*" />
-	</ItemGroup>
-
-	<Target Name="CopySpaOnPublish" AfterTargets="Publish">
-		<!-- Clean previous wwwroot in the publish directory -->
-		<RemoveDir Directories="$(PublishDir)wwwroot" />
-		<!-- Copy SPA files -->
-		<Copy SourceFiles="@(SpaFiles)" DestinationFolder="$(PublishDir)wwwroot\%(RecursiveDir)" />
-	</Target>
 
 </Project>
