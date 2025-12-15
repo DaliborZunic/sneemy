@@ -11,6 +11,7 @@ const Login = () => {
 
   const [email, setEmail] = useState("admin@sneemy.com");
   const [password, setPassword] = useState("Admin@123");
+
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 

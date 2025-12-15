@@ -61,6 +61,7 @@ namespace Sneemy.API
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IOrderService, OrderService>();
+            builder.Services.AddScoped<IStripeService, StripeService>();
 
             // Services
             builder.Services.AddControllers();

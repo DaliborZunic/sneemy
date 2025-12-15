@@ -3,7 +3,7 @@ import checkboxUncheckedIcon from "../../../../assets/checkbox-unchecked.svg";
 import checkboxCheckedIcon from "../../../../assets/checkbox-checked.svg";
 import { useState } from "react";
 import type { ChangeEvent } from "react";
-import api from "../../../../api"; // ⬅️ adjust this path if your api.ts is elsewhere
+import StripePaymentModal from "./components/StripePaymentModal/StripePaymentModal";
 
 export default function PaymentForm() {
   const [formData, setFormData] = useState({
@@ -17,9 +17,11 @@ export default function PaymentForm() {
     companyOIB: ""
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  
+  const ORDER_AMOUNT = 100;
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -32,49 +34,36 @@ export default function PaymentForm() {
     setFormData(prev => ({ ...prev, isR1Reciept: !prev.isR1Reciept }));
   };
 
-  const onPayButton = async () => {
+  const onPayButton = () => {
     setError(null);
     setSuccess(false);
 
-    // basic validation
     if (!formData.nameAndLastName || !formData.eMail) {
       setError("Molimo ispunite ime i prezime te e-mail.");
       return;
     }
 
-    try {
-      setIsSubmitting(true);
+    setShowPaymentModal(true);
+  };
 
-      await api.post("/orders", {
-        nameAndLastName: formData.nameAndLastName,
-        eMail: formData.eMail,
-        phoneNumber: formData.phoneNumber || null,
-        website: formData.website || null,
-        customerRequest: formData.customerRequest || null,
-        isR1Reciept: formData.isR1Reciept,
-        companyName: formData.isR1Reciept ? formData.companyName || null : null,
-        companyOIB: formData.isR1Reciept ? formData.companyOIB || null : null
-      });
+  const handlePaymentSuccess = () => {
+    setShowPaymentModal(false);
+    setSuccess(true);
+    
+    setFormData({
+      nameAndLastName: "",
+      eMail: "",
+      phoneNumber: "",
+      website: "",
+      customerRequest: "",
+      isR1Reciept: false,
+      companyName: "",
+      companyOIB: ""
+    });
+  };
 
-      setSuccess(true);
-
-      // optional: clear form after successful submit
-      setFormData({
-        nameAndLastName: "",
-        eMail: "",
-        phoneNumber: "",
-        website: "",
-        customerRequest: "",
-        isR1Reciept: false,
-        companyName: "",
-        companyOIB: ""
-      });
-    } catch (err) {
-      console.error("Error creating order", err);
-      setError("Došlo je do pogreške pri slanju narudžbe. Pokušajte ponovno.");
-    } finally {
-      setIsSubmitting(false);
-    }
+  const handlePaymentCancel = () => {
+    setShowPaymentModal(false);
   };
 
   return (
@@ -82,10 +71,9 @@ export default function PaymentForm() {
       <div className="section-content-wrapper">
         <h1>Za početak ne treba puno...</h1>
 
-        {/* feedback messages */}
         {error && <div className="form-error">{error}</div>}
         {success && (
-          <div className="form-success">Vaša narudžba je zaprimljena!</div>
+          <div className="form-success">Vaša narudžba je zaprimljena i plaćena!</div>
         )}
 
         <div className="payment-form">
@@ -192,11 +180,20 @@ export default function PaymentForm() {
           <button
             className="pay-video-button"
             onClick={onPayButton}
-            disabled={isSubmitting}
+            disabled={showPaymentModal}
           >
-            {isSubmitting ? "Slanje..." : "Plati video"}
+            Plati €{ORDER_AMOUNT.toFixed(2)}
           </button>
         </div>
+
+        {showPaymentModal && (
+          <StripePaymentModal
+            formData={formData}
+            amount={ORDER_AMOUNT}
+            onSuccess={handlePaymentSuccess}
+            onCancel={handlePaymentCancel}
+          />
+        )}
       </div>
     </section>
   );

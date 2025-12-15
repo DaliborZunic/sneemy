@@ -31,9 +31,7 @@
 		<MakeDir Directories="$(PublishDir)wwwroot" />
 
 		<!-- Copy SPA files into publish/wwwroot -->
-		<Copy
-		  SourceFiles="@(SpaFiles)"
-		  DestinationFolder="$(PublishDir)wwwroot\%(RecursiveDir)" />
+		<Copy SourceFiles="@(SpaFiles)" DestinationFolder="$(PublishDir)wwwroot\%(RecursiveDir)" />
 	</Target>
 
 	<!-- BACKEND PACKAGES -->
@@ -45,6 +43,7 @@
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
+		<PackageReference Include="Stripe.net" Version="50.0.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.0" />
 	</ItemGroup>
