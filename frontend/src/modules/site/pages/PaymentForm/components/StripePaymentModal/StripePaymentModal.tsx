@@ -166,10 +166,14 @@ export default function StripePaymentModal({ formData, amount, onSuccess, onCanc
   const [clientSecret, setClientSecret] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [intentCreated, setIntentCreated] = useState(false);
 
   useEffect(() => {
+  if (!intentCreated) {
     createPaymentIntent();
-  }, []);
+    setIntentCreated(true);
+  }
+}, [intentCreated]);
 
   const createPaymentIntent = async () => {
     try {
