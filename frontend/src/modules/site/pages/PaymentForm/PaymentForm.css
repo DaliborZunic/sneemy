@@ -105,6 +105,17 @@
     font-size: 1.1rem;
 }
 
+.field-error {
+    color: #ff6b6b;
+    font-size: 0.9rem;
+    margin-top: 0.3rem;
+    display: block;
+}
+
+.input-error {
+    border: 2px solid #ff6b6b !important;
+}
+
 @media (max-width: 1320px) {
     .section-content-wrapper {
         max-width: 1000px !important;
