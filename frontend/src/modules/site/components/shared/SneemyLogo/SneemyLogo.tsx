@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./SneemyLogo.css"
 
 interface SneemyLogoProps {
@@ -7,7 +8,7 @@ interface SneemyLogoProps {
 const SneemyLogo = ({ logoColorHex } :SneemyLogoProps) => {
 
     return (
-        <>
+        <Link to="/" className="sneemy-logo-link">
             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                 width="213px" viewBox="24.517 0 163.965 29" enable-background="new 24.517 0 163.965 29" xmlSpace="preserve"
             >
@@ -96,8 +97,7 @@ const SneemyLogo = ({ logoColorHex } :SneemyLogoProps) => {
 		c0.211,0.082,0.566,0.17,1.064,0.269v8.15C181.393,22.977,179.996,23.35,178.383,23.35z"/>
                 </g>
             </svg>
-
-        </>
+        </Link>
     )
 }
 

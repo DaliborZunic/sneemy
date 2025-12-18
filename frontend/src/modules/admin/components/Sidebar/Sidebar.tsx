@@ -22,7 +22,9 @@ export default function Sidebar({
     return (
         <div className={`sidebar${sidebarShown ? " active" : ""}`}>
             <div className="sidebar-header">
-                <img className="crm-logo" src={sneemyLogoCRM} alt="" />
+                <Link to="/admin">
+                    <img className="crm-logo" src={sneemyLogoCRM} alt="" />
+                </Link>
                 <div className="close-icon-wrapper" onClick={onHamburgerClick}>
                     <img className="close-icon" src={closeIcon} alt="close icon" />
                 </div>
