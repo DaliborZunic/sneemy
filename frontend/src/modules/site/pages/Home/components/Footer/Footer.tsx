@@ -11,7 +11,7 @@ const Footer = () => {
             © 2025 Sneemy – obrt za video produkciju<br />
             vl. Dalibor Žunić,
             Zaprešić<br />
-            info@sneemy.hr
+            <a href="mailto:info@sneemy.hr">info@sneemy.hr</a>
           </p>
         </div>
         <div className="right-footer-column">
