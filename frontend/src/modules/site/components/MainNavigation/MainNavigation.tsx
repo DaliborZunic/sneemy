@@ -12,13 +12,17 @@ const MainNavigation = () => {
         setMenuShown(prev => !prev)
     }
 
+    const closeMenu = () => {
+        setMenuShown(false)
+    }
+
     return (
         <div className="main-navigation-wrapper">
             <SneemyLogo logoColorHex="#FBFE00" />
             <nav className={`main-navigation ${menuShown ? "menu-shown" : ""}`}>
-                <Link to="/">Home</Link>
-                <Link to="/payment-form">About Us</Link>
-                <Link className="highlighted-nav-link" to="/payment-form">Naruči video</Link>
+                <Link to="/" onClick={closeMenu}>Home</Link>
+                <Link to="/payment-form" onClick={closeMenu}>About Us</Link>
+                <Link className="highlighted-nav-link" to="/payment-form" onClick={closeMenu}>Naruči video</Link>
             </nav>
             <div className="hamburger-icon-wrapper" onClick={handleHamburgerClick}>
                 { !menuShown ? <img className="hamburger-icon" src={hamburgerIcon} alt="hamburger icon" /> : menuShown && <img className="hamburger-icon" src={closeIcon} alt="close icon" /> }
