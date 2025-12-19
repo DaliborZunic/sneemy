@@ -2,30 +2,25 @@
 using Sneemy.API.DTOs.Auth;
 using Sneemy.API.Interfaces;
 
-[ApiController]
-[Route("api/[controller]")]
-public class AuthController : ControllerBase
+namespace Sneemy.API.Controllers
 {
-    private readonly IAuthService _auth;
-
-    public AuthController(IAuthService auth)
+    [ApiController]
+    [Route("api/[controller]")]
+    public class AuthController : ControllerBase
     {
-        _auth = auth;
-    }
+        private readonly IAuthService _authService;
 
-    [HttpPost("register")]
-    public async Task<ActionResult<AuthResponseDto>> Register([FromBody] RegisterDto dto)
-    {
-        var res = await _auth.Register(dto);
-        if (res == null) return BadRequest("Unable to register user.");
-        return Ok(res);
-    }
+        public AuthController(IAuthService authService)
+        {
+            _authService = authService;
+        }
 
-    [HttpPost("login")]
-    public async Task<ActionResult<AuthResponseDto>> Login([FromBody] LoginDto dto)
-    {
-        var res = await _auth.Login(dto);
-        if (res == null) return Unauthorized();
-        return Ok(res);
+        [HttpPost("register")]
+        public async Task<ActionResult<AuthResponseDto>> Register([FromBody] RegisterDto dto)
+            => Ok(await _authService.Register(dto));
+
+        [HttpPost("login")]
+        public async Task<ActionResult<AuthResponseDto>> Login([FromBody] LoginDto dto)
+            => Ok(await _authService.Login(dto));
     }
 }

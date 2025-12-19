@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Sneemy.API.Data;
 using Sneemy.API.Interfaces;
+using Sneemy.API.Middleware;
 using Sneemy.API.Models;
 using Sneemy.API.Services;
 using System.Text;
@@ -112,7 +113,10 @@ namespace Sneemy.API
                 await SeedData.Initialize(services);
             }
 
-            // Swagger (dev) 
+            // Global exception handling
+            app.UseMiddleware<ExceptionMiddleware>();
+
+            // Swagger (dev)
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();

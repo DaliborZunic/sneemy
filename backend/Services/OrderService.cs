@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sneemy.API.Data;
+using Sneemy.API.Exceptions;
+using Sneemy.API.Interfaces;
 using Sneemy.API.Models;
 using Sneemy.API.Models.DTOs;
 
@@ -8,10 +10,46 @@ namespace Sneemy.API.Services
     public class OrderService : IOrderService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IStripeService _stripeService;
 
-        public OrderService(ApplicationDbContext context)
+        public OrderService(ApplicationDbContext context, IStripeService stripeService)
         {
             _context = context;
+            _stripeService = stripeService;
+        }
+
+        public async Task<PaymentIntentResponseDto> CreatePaymentIntentAsync(CreatePaymentIntentDto dto)
+        {
+            var paymentIntent = await _stripeService.CreatePaymentIntentAsync(dto.Amount, dto.Currency);
+
+            return new PaymentIntentResponseDto
+            {
+                ClientSecret = paymentIntent.ClientSecret,
+                PaymentIntentId = paymentIntent.Id
+            };
+        }
+
+        public async Task<OrderDto> CreateOrderWithPaymentAsync(CreateOrderWithPaymentDto dto)
+        {
+            var paymentValid = await _stripeService.VerifyPaymentAsync(dto.PaymentIntentId);
+
+            if (!paymentValid)
+                throw new BadRequestException("Payment not confirmed or failed");
+
+            var createOrderDto = new CreateOrderDto
+            {
+                NameAndLastName = dto.NameAndLastName,
+                EMail = dto.EMail,
+                PhoneNumber = dto.PhoneNumber,
+                Website = dto.Website,
+                CustomerRequest = dto.CustomerRequest,
+                IsR1Reciept = dto.IsR1Reciept,
+                CompanyName = dto.CompanyName,
+                CompanyOIB = dto.CompanyOIB,
+                StripePaymentIntentId = dto.PaymentIntentId
+            };
+
+            return await CreateAsync(createOrderDto);
         }
 
         public async Task<IEnumerable<OrderDto>> GetAllAsync()
@@ -35,9 +73,9 @@ namespace Sneemy.API.Services
                 .ToListAsync();
         }
 
-        public async Task<OrderDto?> GetByIdAsync(Guid id)
+        public async Task<OrderDto> GetByIdAsync(Guid id)
         {
-            return await _context.Orders
+            var order = await _context.Orders
                 .Where(o => o.Id == id)
                 .Select(o => new OrderDto
                 {
@@ -54,6 +92,11 @@ namespace Sneemy.API.Services
                     StripePaymentIntentId = o.StripePaymentIntentId
                 })
                 .FirstOrDefaultAsync();
+
+            if (order == null)
+                throw new NotFoundException("Order not found");
+
+            return order;
         }
 
         public async Task<OrderDto> CreateAsync(CreateOrderDto dto)
@@ -91,10 +134,11 @@ namespace Sneemy.API.Services
             };
         }
 
-        public async Task<bool> UpdateAsync(Guid id, CreateOrderDto dto)
+        public async Task UpdateAsync(Guid id, CreateOrderDto dto)
         {
             var order = await _context.Orders.FindAsync(id);
-            if (order == null) return false;
+            if (order == null)
+                throw new NotFoundException("Order not found");
 
             order.NameAndLastName = dto.NameAndLastName;
             order.EMail = dto.EMail;
@@ -106,17 +150,16 @@ namespace Sneemy.API.Services
             order.CompanyOIB = dto.CompanyOIB;
 
             await _context.SaveChangesAsync();
-            return true;
         }
 
-        public async Task<bool> DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             var order = await _context.Orders.FindAsync(id);
-            if (order == null) return false;
+            if (order == null)
+                throw new NotFoundException("Order not found");
 
             _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
-            return true;
         }
     }
 }

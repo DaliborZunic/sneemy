@@ -1,68 +1,71 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Sneemy.API.DTOs.Auth;
+using Sneemy.API.Exceptions;
 using Sneemy.API.Interfaces;
 using Sneemy.API.Models;
 
-public class AuthService : IAuthService
+namespace Sneemy.API.Services
 {
-    private readonly UserManager<User> _userManager;
-    private readonly IJwtService _jwt;
-
-    public AuthService(UserManager<User> userManager, IJwtService jwt)
+    public class AuthService : IAuthService
     {
-        _userManager = userManager;
-        _jwt = jwt;
-    }
+        private readonly UserManager<User> _userManager;
+        private readonly IJwtService _jwt;
 
-    public async Task<AuthResponseDto?> Register(RegisterDto dto)
-    {
-        var existing = await _userManager.FindByEmailAsync(dto.Email);
-        if (existing != null) return null;
-
-        var user = new User
+        public AuthService(UserManager<User> userManager, IJwtService jwt)
         {
-            Email = dto.Email,
-            UserName = dto.Email,
-            FirstName = dto.FirstName,
-            LastName = dto.LastName
-        };
+            _userManager = userManager;
+            _jwt = jwt;
+        }
 
-        var result = await _userManager.CreateAsync(user, dto.Password);
-        if (!result.Succeeded) return null;
-
-        await _userManager.AddToRoleAsync(user, "User");
-
-        var token = await _jwt.GenerateToken(user);
-        var roles = await _userManager.GetRolesAsync(user);
-
-        return new AuthResponseDto
+        public async Task<AuthResponseDto> Register(RegisterDto dto)
         {
-            Token = token,
-            Email = user.Email ?? string.Empty,
-            FirstName = user.FirstName ?? string.Empty,
-            LastName = user.LastName ?? string.Empty,
-            Roles = roles.ToList()
-        };
-    }
+            var existing = await _userManager.FindByEmailAsync(dto.Email);
+            if (existing != null)
+                throw new BadRequestException("User with this email already exists");
 
-    public async Task<AuthResponseDto?> Login(LoginDto dto)
-    {
-        var user = await _userManager.FindByEmailAsync(dto.Email);
-        if (user == null) return null;
+            var user = new User
+            {
+                Email = dto.Email,
+                UserName = dto.Email,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName
+            };
 
-        var valid = await _userManager.CheckPasswordAsync(user, dto.Password);
-        if (!valid) return null;
+            var result = await _userManager.CreateAsync(user, dto.Password);
+            if (!result.Succeeded)
+                throw new BadRequestException(string.Join(", ", result.Errors.Select(e => e.Description)));
 
-        var token = await _jwt.GenerateToken(user);
-        var roles = await _userManager.GetRolesAsync(user);
+            await _userManager.AddToRoleAsync(user, "User");
 
-        return new AuthResponseDto
+            return await BuildAuthResponse(user);
+        }
+
+        public async Task<AuthResponseDto> Login(LoginDto dto)
         {
-            Token = token,
-            Email = user.Email ?? string.Empty,
-            FirstName = user.FirstName ?? string.Empty,
-            LastName = user.LastName ?? string.Empty,
-            Roles = roles.ToList()
-        };
+            var user = await _userManager.FindByEmailAsync(dto.Email);
+            if (user == null)
+                throw new UnauthorizedException("Invalid email or password");
+
+            var valid = await _userManager.CheckPasswordAsync(user, dto.Password);
+            if (!valid)
+                throw new UnauthorizedException("Invalid email or password");
+
+            return await BuildAuthResponse(user);
+        }
+
+        private async Task<AuthResponseDto> BuildAuthResponse(User user)
+        {
+            var token = await _jwt.GenerateToken(user);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            return new AuthResponseDto
+            {
+                Token = token,
+                Email = user.Email ?? string.Empty,
+                FirstName = user.FirstName ?? string.Empty,
+                LastName = user.LastName ?? string.Empty,
+                Roles = roles.ToList()
+            };
+        }
     }
 }
