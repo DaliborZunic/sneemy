@@ -261,9 +261,10 @@ export default function StripePaymentModal({ formData, amount, onSuccess, onCanc
 
   const options = {
     clientSecret,
-    appearance: { 
+    appearance: {
       theme: "stripe" as const,
     },
+    locale: 'hr' as const,
   };
 
   return (
