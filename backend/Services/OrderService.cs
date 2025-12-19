@@ -32,6 +32,17 @@ namespace Sneemy.API.Services
             };
         }
 
+        private const long MaxTotalFileSize = 25 * 1024 * 1024; // 25MB
+        private static readonly HashSet<string> AllowedExtensions = new(StringComparer.OrdinalIgnoreCase)
+        {
+            ".pdf", ".ppt", ".pptx", ".doc", ".docx", ".txt",
+            ".jpeg", ".jpg", ".png", ".gif", ".zip", ".rar"
+        };
+        private static readonly HashSet<string> BlockedExtensions = new(StringComparer.OrdinalIgnoreCase)
+        {
+            ".exe", ".bat", ".cmd", ".com", ".msi", ".scr", ".ps1", ".vbs", ".js", ".dll"
+        };
+
         public async Task<OrderDto> CreateOrderWithPaymentAsync(CreateOrderWithPaymentDto dto, List<IFormFile>? files)
         {
             var paymentValid = await _stripeService.VerifyPaymentAsync(dto.PaymentIntentId);
@@ -40,6 +51,22 @@ namespace Sneemy.API.Services
                 throw new BadRequestException("Payment not confirmed or failed");
 
             var hasFiles = files != null && files.Count > 0;
+
+            if (hasFiles)
+            {
+                var totalSize = files!.Sum(f => f.Length);
+                if (totalSize > MaxTotalFileSize)
+                    throw new BadRequestException($"Ukupna veličina datoteka prelazi 25MB limit ({totalSize / 1024 / 1024}MB)");
+
+                foreach (var file in files)
+                {
+                    var ext = Path.GetExtension(file.FileName);
+                    if (BlockedExtensions.Contains(ext))
+                        throw new BadRequestException($"Vrsta datoteke '{ext}' nije dozvoljena");
+                    if (!AllowedExtensions.Contains(ext))
+                        throw new BadRequestException($"Vrsta datoteke '{ext}' nije podržana. Dozvoljene: pdf, ppt, pptx, doc, docx, txt, jpeg, jpg, png, gif, zip, rar");
+                }
+            }
             var createdAt = DateTime.UtcNow;
 
             var order = new Order
