@@ -5,6 +5,9 @@ namespace Sneemy.API.Models.DTOs
 {
     public class CreateOrderDto
     {
+        [Required(ErrorMessage = "Service is required.")]
+        public int ServiceId { get; set; }
+
         [Required(ErrorMessage = "Name and last name is required.")]
         [StringLength(200, MinimumLength = 2, ErrorMessage = "Name must be between 2 and 200 characters.")]
         public string NameAndLastName { get; set; } = null!;

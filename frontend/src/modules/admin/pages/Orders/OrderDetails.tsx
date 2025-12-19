@@ -59,6 +59,18 @@ export default function OrderDetails() {
 
             <div className="order-details-content">
                 <div className="detail-group">
+                    <h2>Usluga</h2>
+                    <div className="detail-row">
+                        <span className="detail-label">Naziv usluge</span>
+                        <span className="detail-value">{order.serviceName}</span>
+                    </div>
+                    <div className="detail-row">
+                        <span className="detail-label">Cijena</span>
+                        <span className="detail-value">{order.servicePrice} €</span>
+                    </div>
+                </div>
+
+                <div className="detail-group">
                     <h2>Podaci o kupcu</h2>
                     <div className="detail-row">
                         <span className="detail-label">Ime i prezime</span>

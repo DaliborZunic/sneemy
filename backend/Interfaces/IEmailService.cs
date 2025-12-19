@@ -4,6 +4,8 @@ namespace Sneemy.API.Interfaces
 {
     public class OrderEmailData
     {
+        public string ServiceName { get; set; } = null!;
+        public decimal ServicePrice { get; set; }
         public string CustomerName { get; set; } = null!;
         public string CustomerEmail { get; set; } = null!;
         public string? CustomerPhone { get; set; }

@@ -6,6 +6,9 @@ import api from "../../../../api";
 
 export interface Order {
     id: string;
+    serviceId: number;
+    serviceName: string;
+    servicePrice: number;
     nameAndLastName: string;
     eMail: string;
     phoneNumber: string | null;
@@ -52,9 +55,10 @@ export default function Orders() {
             <div className="table-wrapper">
                 <table>
                     <tr>
+                        <th>Usluga</th>
+                        <th>Cijena</th>
                         <th>Ime i prezime</th>
                         <th>e-mail</th>
-                        <th>Web stranica</th>
                         <th>Vrijeme narudžbe</th>
                     </tr>
                     {
@@ -64,9 +68,10 @@ export default function Orders() {
                                 onClick={() => navigate(`/admin/orders/${order.id}`)}
                                 className="clickable-row"
                             >
+                                <td>{order.serviceName}</td>
+                                <td>{order.servicePrice} €</td>
                                 <td>{order.nameAndLastName}</td>
                                 <td>{order.eMail}</td>
-                                <td>{order.website || "-"}</td>
                                 <td>{formatOrderDate(order.createdAt)}</td>
                             </tr>
                         ))

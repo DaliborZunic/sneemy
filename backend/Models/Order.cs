@@ -1,10 +1,20 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Sneemy.API.Models
 {
     public class Order
     {
         public Guid Id { get; set; } = Guid.NewGuid();
+
+        [Required]
+        public int ServiceId { get; set; }
+
+        [ForeignKey(nameof(ServiceId))]
+        public Service Service { get; set; } = null!;
+
+        [Required]
+        public decimal ServicePrice { get; set; }
 
         [Required]
         [MaxLength(200)]

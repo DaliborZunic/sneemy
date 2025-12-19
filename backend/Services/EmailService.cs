@@ -78,6 +78,8 @@ namespace Sneemy.API.Services
     <h2 style='color: #2c3e50;'>Nova narudžba</h2>
 
     <table style='border-collapse: collapse; width: 100%; max-width: 600px;'>
+        <tr><td style='padding: 8px; border: 1px solid #ddd;'><strong>Usluga</strong></td><td style='padding: 8px; border: 1px solid #ddd;'>{order.ServiceName}</td></tr>
+        <tr><td style='padding: 8px; border: 1px solid #ddd;'><strong>Cijena</strong></td><td style='padding: 8px; border: 1px solid #ddd;'>{order.ServicePrice:0.00} €</td></tr>
         <tr><td style='padding: 8px; border: 1px solid #ddd;'><strong>Stripe ID</strong></td><td style='padding: 8px; border: 1px solid #ddd;'>{order.StripePaymentIntentId}</td></tr>
         <tr><td style='padding: 8px; border: 1px solid #ddd;'><strong>Datum</strong></td><td style='padding: 8px; border: 1px solid #ddd;'>{order.CreatedAt:dd.MM.yyyy HH:mm}</td></tr>
         <tr><td style='padding: 8px; border: 1px solid #ddd;'><strong>Ime i prezime</strong></td><td style='padding: 8px; border: 1px solid #ddd;'>{order.CustomerName}</td></tr>

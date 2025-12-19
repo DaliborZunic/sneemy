@@ -3,6 +3,9 @@
     public class OrderDto
     {
         public Guid Id { get; set; }
+        public int ServiceId { get; set; }
+        public string ServiceName { get; set; } = null!;
+        public decimal ServicePrice { get; set; }
         public string NameAndLastName { get; set; } = null!;
         public string EMail { get; set; } = null!;
         public string? PhoneNumber { get; set; }

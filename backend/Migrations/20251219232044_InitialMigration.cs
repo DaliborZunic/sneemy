@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -7,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Sneemy.API.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstMigration : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -27,25 +28,21 @@ namespace Sneemy.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
+                name: "Services",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    NameAndLastName = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    EMail = table.Column<string>(type: "character varying(254)", maxLength: 254, nullable: false),
-                    PhoneNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
-                    Website = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
-                    CustomerRequest = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: true),
-                    IsR1Reciept = table.Column<bool>(type: "boolean", nullable: false),
-                    CompanyName = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: true),
-                    CompanyOIB = table.Column<string>(type: "character varying(11)", maxLength: 11, nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    StripePaymentIntentId = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    FilesAttached = table.Column<bool>(type: "boolean", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
+                    Price = table.Column<decimal>(type: "numeric(10,2)", precision: 10, scale: 2, nullable: false),
+                    Features = table.Column<List<string>>(type: "text[]", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    DisplayOrder = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.PrimaryKey("PK_Services", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -93,6 +90,36 @@ namespace Sneemy.API.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ServiceId = table.Column<int>(type: "integer", nullable: false),
+                    ServicePrice = table.Column<decimal>(type: "numeric", nullable: false),
+                    NameAndLastName = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    EMail = table.Column<string>(type: "character varying(254)", maxLength: 254, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    Website = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    CustomerRequest = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: true),
+                    IsR1Reciept = table.Column<bool>(type: "boolean", nullable: false),
+                    CompanyName = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: true),
+                    CompanyOIB = table.Column<string>(type: "character varying(11)", maxLength: 11, nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    StripePaymentIntentId = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    FilesAttached = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_Services_ServiceId",
+                        column: x => x.ServiceId,
+                        principalTable: "Services",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -209,6 +236,11 @@ namespace Sneemy.API.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_ServiceId",
+                table: "Orders",
+                column: "ServiceId");
+
+            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "Users",
                 column: "NormalizedEmail");
@@ -246,6 +278,9 @@ namespace Sneemy.API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Services");
         }
     }
 }

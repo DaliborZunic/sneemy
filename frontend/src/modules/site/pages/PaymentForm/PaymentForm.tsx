@@ -1,9 +1,19 @@
 import "./PaymentForm.css";
 import checkboxUncheckedIcon from "../../../../assets/checkbox-unchecked.svg";
 import checkboxCheckedIcon from "../../../../assets/checkbox-checked.svg";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import type { ChangeEvent, DragEvent } from "react";
+import api from "../../../../api";
 import StripePaymentModal from "./components/StripePaymentModal/StripePaymentModal";
+
+interface Service {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  features: string[];
+}
 
 const MAX_TOTAL_SIZE = 25 * 1024 * 1024; // 25MB
 const ALLOWED_EXTENSIONS = ['.pdf', '.ppt', '.pptx', '.doc', '.docx', '.txt', '.jpeg', '.jpg', '.png', '.gif', '.zip', '.rar'];
@@ -60,6 +70,7 @@ const isValidWebsite = (url: string): boolean => {
 };
 
 type FieldErrors = {
+  serviceId?: string;
   nameAndLastName?: string;
   eMail?: string;
   phoneNumber?: string;
@@ -70,6 +81,10 @@ type FieldErrors = {
 };
 
 export default function PaymentForm() {
+  const [searchParams] = useSearchParams();
+  const [services, setServices] = useState<Service[]>([]);
+  const [selectedServiceId, setSelectedServiceId] = useState<number | null>(null);
+
   const [formData, setFormData] = useState({
     nameAndLastName: "",
     eMail: "",
@@ -88,7 +103,23 @@ export default function PaymentForm() {
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const ORDER_AMOUNT = 100;
+  useEffect(() => {
+    api.get<Service[]>("/services")
+      .then(res => {
+        setServices(res.data);
+        const serviceIdParam = searchParams.get("serviceId");
+        if (serviceIdParam) {
+          const id = parseInt(serviceIdParam, 10);
+          if (res.data.some(s => s.id === id)) {
+            setSelectedServiceId(id);
+          }
+        }
+      })
+      .catch(err => console.error("Failed to fetch services:", err));
+  }, [searchParams]);
+
+  const selectedService = services.find(s => s.id === selectedServiceId);
+  const orderAmount = selectedService?.price ?? 0;
 
   const getTotalFileSize = (fileList: File[]): number => {
     return fileList.reduce((sum, file) => sum + file.size, 0);
@@ -178,6 +209,10 @@ export default function PaymentForm() {
   const validateForm = (): FieldErrors => {
     const newErrors: FieldErrors = {};
 
+    if (!selectedServiceId) {
+      newErrors.serviceId = "Odaberite uslugu";
+    }
+
     if (!formData.nameAndLastName.trim()) {
       newErrors.nameAndLastName = "Obavezno polje";
     }
@@ -229,6 +264,7 @@ export default function PaymentForm() {
     setSuccess(true);
     setErrors({});
     setFiles([]);
+    setSelectedServiceId(null);
 
     setFormData({
       nameAndLastName: "",
@@ -240,6 +276,14 @@ export default function PaymentForm() {
       companyName: "",
       companyOIB: ""
     });
+  };
+
+  const handleServiceChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    setSelectedServiceId(value ? parseInt(value, 10) : null);
+    if (errors.serviceId) {
+      setErrors(prev => ({ ...prev, serviceId: undefined }));
+    }
   };
 
   const handlePaymentCancel = () => {
@@ -256,6 +300,24 @@ export default function PaymentForm() {
         )}
 
         <div className="payment-form">
+          <div className="form-row">
+            <div className="form-input-item">
+              <select
+                className={`service-select${errors.serviceId ? " input-error" : ""}`}
+                value={selectedServiceId ?? ""}
+                onChange={handleServiceChange}
+              >
+                <option value="">odaberite uslugu*</option>
+                {services.map(service => (
+                  <option key={service.id} value={service.id}>
+                    {service.name} - {service.price}€
+                  </option>
+                ))}
+              </select>
+              {errors.serviceId && <span className="field-error">{errors.serviceId}</span>}
+            </div>
+          </div>
+
           <div className="form-row">
             <div className="form-input-item">
               <input
@@ -411,17 +473,18 @@ export default function PaymentForm() {
           <button
             className="pay-video-button"
             onClick={onPayButton}
-            disabled={showPaymentModal}
+            disabled={showPaymentModal || orderAmount === 0}
           >
-            Plati €{ORDER_AMOUNT.toFixed(2)}
+            Plati €{orderAmount.toFixed(2)}
           </button>
         </div>
 
-        {showPaymentModal && (
+        {showPaymentModal && selectedServiceId && (
           <StripePaymentModal
             formData={formData}
             files={files}
-            amount={ORDER_AMOUNT}
+            serviceId={selectedServiceId}
+            amount={orderAmount}
             onSuccess={handlePaymentSuccess}
             onCancel={handlePaymentCancel}
           />

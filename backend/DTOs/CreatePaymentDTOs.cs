@@ -3,7 +3,7 @@
     // Request to create payment intent
     public class CreatePaymentIntentDto
     {
-        public decimal Amount { get; set; }
+        public int ServiceId { get; set; }
         public string Currency { get; set; } = "eur";
     }
 
@@ -18,6 +18,7 @@
     public class CreateOrderWithPaymentDto
     {
         public string PaymentIntentId { get; set; } = string.Empty;
+        public int ServiceId { get; set; }
 
         // Original order fields
         public string NameAndLastName { get; set; } = string.Empty;

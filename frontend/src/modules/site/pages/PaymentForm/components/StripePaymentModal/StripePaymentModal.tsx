@@ -22,12 +22,13 @@ interface PaymentModalProps {
     companyOIB: string;
   };
   files: File[];
+  serviceId: number;
   amount: number;
   onSuccess: () => void;
   onCancel: () => void;
 }
 
-function CheckoutForm({ formData, files, amount, onSuccess, onCancel }: PaymentModalProps) {
+function CheckoutForm({ formData, files, serviceId, amount, onSuccess, onCancel }: PaymentModalProps) {
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -56,6 +57,7 @@ function CheckoutForm({ formData, files, amount, onSuccess, onCancel }: PaymentM
       if (paymentIntent && paymentIntent.status === "succeeded") {
         const formDataToSend = new FormData();
         formDataToSend.append('paymentIntentId', paymentIntent.id);
+        formDataToSend.append('serviceId', String(serviceId));
         formDataToSend.append('nameAndLastName', formData.nameAndLastName);
         formDataToSend.append('eMail', formData.eMail);
         formDataToSend.append('phoneNumber', formData.phoneNumber || '');
@@ -171,7 +173,7 @@ function CheckoutForm({ formData, files, amount, onSuccess, onCancel }: PaymentM
   );
 }
 
-export default function StripePaymentModal({ formData, files, amount, onSuccess, onCancel }: PaymentModalProps) {
+export default function StripePaymentModal({ formData, files, serviceId, amount, onSuccess, onCancel }: PaymentModalProps) {
   const [clientSecret, setClientSecret] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
@@ -187,7 +189,7 @@ export default function StripePaymentModal({ formData, files, amount, onSuccess,
   const createPaymentIntent = async () => {
     try {
       const response = await api.post("/orders/create-payment-intent", {
-        amount: amount
+        serviceId: serviceId
       });
 
       setClientSecret(response.data.clientSecret);
@@ -277,6 +279,7 @@ export default function StripePaymentModal({ formData, files, amount, onSuccess,
       <CheckoutForm
         formData={formData}
         files={files}
+        serviceId={serviceId}
         amount={amount}
         onSuccess={onSuccess}
         onCancel={onCancel}

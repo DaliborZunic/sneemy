@@ -28,7 +28,8 @@
     width: 100%;
 }
 
-.form-input-item input {
+.form-input-item input,
+.form-input-item .service-select {
     width: 100%;
     background-color: #5500c9;
     font-family: 'Outfit', sans-serif;
@@ -38,6 +39,25 @@
     padding-left: 1.3rem;
     font-weight: 700;
     font-size: 1.2rem;
+}
+
+.form-input-item .service-select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ccb7e9' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+}
+
+.form-input-item .service-select option {
+    background-color: #5500c9;
+    color: white;
+}
+
+.form-input-item .service-select:invalid,
+.form-input-item .service-select option[value=""] {
+    color: #ccb7e9;
 }
 
 .form-input-item input::placeholder,

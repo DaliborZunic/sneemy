@@ -12,6 +12,7 @@ namespace Sneemy.API.Data
         }
 
         public DbSet<Order> Orders { get; set; } = null!;
+        public DbSet<Service> Services { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -22,6 +23,13 @@ namespace Sneemy.API.Data
 
             // Optional: map Orders table name
             builder.Entity<Order>().ToTable("Orders");
+
+            // Configure Service entity
+            builder.Entity<Service>(entity =>
+            {
+                entity.ToTable("Services");
+                entity.Property(e => e.Price).HasPrecision(10, 2);
+            });
         }
     }
 }

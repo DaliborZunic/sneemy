@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Sneemy.API.Models;
 
 namespace Sneemy.API.Data
@@ -9,6 +10,7 @@ namespace Sneemy.API.Data
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
+            var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
 
             // Seed Roles
             string[] roleNames = { "Admin", "User" };
@@ -41,6 +43,65 @@ namespace Sneemy.API.Data
                 {
                     await userManager.AddToRoleAsync(adminUser, "Admin");
                 }
+            }
+
+            // Seed Services
+            if (!await dbContext.Services.AnyAsync())
+            {
+                var services = new List<Service>
+                {
+                    new Service
+                    {
+                        Name = "Story / reel objava",
+                        Description = "Za male obrte, OPG-ove i influencere koji žele prezentirati proizvod u modernom formatu.",
+                        Price = 59m,
+                        Features = new List<string>
+                        {
+                            "video ca. 30 sekundi",
+                            "autentičan stil mobilnog formata",
+                            "animacija logotipa",
+                            "glazba u pozadini",
+                            "1 revizija uključena"
+                        },
+                        IsActive = true,
+                        DisplayOrder = 1
+                    },
+                    new Service
+                    {
+                        Name = "Story / reel objava",
+                        Description = "Za male obrte, OPG-ove i influencere koji žele prezentirati proizvod u modernom formatu.",
+                        Price = 59m,
+                        Features = new List<string>
+                        {
+                            "video ca. 30 sekundi",
+                            "autentičan stil mobilnog formata",
+                            "animacija logotipa",
+                            "glazba u pozadini",
+                            "1 revizija uključena"
+                        },
+                        IsActive = true,
+                        DisplayOrder = 2
+                    },
+                    new Service
+                    {
+                        Name = "Story / reel objava",
+                        Description = "Za male obrte, OPG-ove i influencere koji žele prezentirati proizvod u modernom formatu.",
+                        Price = 59m,
+                        Features = new List<string>
+                        {
+                            "video ca. 30 sekundi",
+                            "autentičan stil mobilnog formata",
+                            "animacija logotipa",
+                            "glazba u pozadini",
+                            "1 revizija uključena"
+                        },
+                        IsActive = true,
+                        DisplayOrder = 3
+                    }
+                };
+
+                dbContext.Services.AddRange(services);
+                await dbContext.SaveChangesAsync();
             }
         }
     }

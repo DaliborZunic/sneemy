@@ -23,7 +23,11 @@ namespace Sneemy.API.Services
 
         public async Task<PaymentIntentResponseDto> CreatePaymentIntentAsync(CreatePaymentIntentDto dto)
         {
-            var paymentIntent = await _stripeService.CreatePaymentIntentAsync(dto.Amount, dto.Currency);
+            var service = await _context.Services.FindAsync(dto.ServiceId);
+            if (service == null || !service.IsActive)
+                throw new BadRequestException("Invalid service selected");
+
+            var paymentIntent = await _stripeService.CreatePaymentIntentAsync(service.Price, dto.Currency);
 
             return new PaymentIntentResponseDto
             {
@@ -45,6 +49,10 @@ namespace Sneemy.API.Services
 
         public async Task<OrderDto> CreateOrderWithPaymentAsync(CreateOrderWithPaymentDto dto, List<IFormFile>? files)
         {
+            var service = await _context.Services.FindAsync(dto.ServiceId);
+            if (service == null || !service.IsActive)
+                throw new BadRequestException("Invalid service selected");
+
             var paymentValid = await _stripeService.VerifyPaymentAsync(dto.PaymentIntentId);
 
             if (!paymentValid)
@@ -71,6 +79,8 @@ namespace Sneemy.API.Services
 
             var order = new Order
             {
+                ServiceId = dto.ServiceId,
+                ServicePrice = service.Price,
                 NameAndLastName = dto.NameAndLastName,
                 EMail = dto.EMail,
                 PhoneNumber = dto.PhoneNumber,
@@ -90,6 +100,8 @@ namespace Sneemy.API.Services
             // Send email with order details and files (don't fail if email fails)
             var emailData = new OrderEmailData
             {
+                ServiceName = service.Name,
+                ServicePrice = service.Price,
                 CustomerName = dto.NameAndLastName,
                 CustomerEmail = dto.EMail,
                 CustomerPhone = dto.PhoneNumber,
@@ -104,16 +116,20 @@ namespace Sneemy.API.Services
 
             await _emailService.SendOrderEmailAsync(emailData, files);
 
-            return MapToDto(order);
+            return MapToDto(order, service);
         }
 
         public async Task<IEnumerable<OrderDto>> GetAllAsync()
         {
             return await _context.Orders
+                .Include(o => o.Service)
                 .OrderByDescending(o => o.CreatedAt)
                 .Select(o => new OrderDto
                 {
                     Id = o.Id,
+                    ServiceId = o.ServiceId,
+                    ServiceName = o.Service.Name,
+                    ServicePrice = o.ServicePrice,
                     NameAndLastName = o.NameAndLastName,
                     EMail = o.EMail,
                     PhoneNumber = o.PhoneNumber,
@@ -131,18 +147,26 @@ namespace Sneemy.API.Services
 
         public async Task<OrderDto> GetByIdAsync(Guid id)
         {
-            var order = await _context.Orders.FindAsync(id);
+            var order = await _context.Orders
+                .Include(o => o.Service)
+                .FirstOrDefaultAsync(o => o.Id == id);
 
             if (order == null)
                 throw new NotFoundException("Order not found");
 
-            return MapToDto(order);
+            return MapToDto(order, order.Service);
         }
 
         public async Task<OrderDto> CreateAsync(CreateOrderDto dto)
         {
+            var service = await _context.Services.FindAsync(dto.ServiceId);
+            if (service == null || !service.IsActive)
+                throw new BadRequestException("Invalid service selected");
+
             var order = new Order
             {
+                ServiceId = dto.ServiceId,
+                ServicePrice = service.Price,
                 NameAndLastName = dto.NameAndLastName,
                 EMail = dto.EMail,
                 PhoneNumber = dto.PhoneNumber,
@@ -159,7 +183,7 @@ namespace Sneemy.API.Services
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
-            return MapToDto(order);
+            return MapToDto(order, service);
         }
 
         public async Task UpdateAsync(Guid id, CreateOrderDto dto)
@@ -168,6 +192,12 @@ namespace Sneemy.API.Services
             if (order == null)
                 throw new NotFoundException("Order not found");
 
+            var service = await _context.Services.FindAsync(dto.ServiceId);
+            if (service == null || !service.IsActive)
+                throw new BadRequestException("Invalid service selected");
+
+            order.ServiceId = dto.ServiceId;
+            order.ServicePrice = service.Price;
             order.NameAndLastName = dto.NameAndLastName;
             order.EMail = dto.EMail;
             order.PhoneNumber = dto.PhoneNumber;
@@ -190,11 +220,14 @@ namespace Sneemy.API.Services
             await _context.SaveChangesAsync();
         }
 
-        private static OrderDto MapToDto(Order order)
+        private static OrderDto MapToDto(Order order, Service service)
         {
             return new OrderDto
             {
                 Id = order.Id,
+                ServiceId = order.ServiceId,
+                ServiceName = service.Name,
+                ServicePrice = order.ServicePrice,
                 NameAndLastName = order.NameAndLastName,
                 EMail = order.EMail,
                 PhoneNumber = order.PhoneNumber,
