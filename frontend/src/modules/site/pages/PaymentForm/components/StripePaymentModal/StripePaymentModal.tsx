@@ -21,12 +21,13 @@ interface PaymentModalProps {
     companyName: string;
     companyOIB: string;
   };
+  files: File[];
   amount: number;
   onSuccess: () => void;
   onCancel: () => void;
 }
 
-function CheckoutForm({ formData, amount, onSuccess, onCancel }: PaymentModalProps) {
+function CheckoutForm({ formData, files, amount, onSuccess, onCancel }: PaymentModalProps) {
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -53,18 +54,22 @@ function CheckoutForm({ formData, amount, onSuccess, onCancel }: PaymentModalPro
       }
 
       if (paymentIntent && paymentIntent.status === "succeeded") {
+        const formDataToSend = new FormData();
+        formDataToSend.append('paymentIntentId', paymentIntent.id);
+        formDataToSend.append('nameAndLastName', formData.nameAndLastName);
+        formDataToSend.append('eMail', formData.eMail);
+        formDataToSend.append('phoneNumber', formData.phoneNumber || '');
+        formDataToSend.append('website', formData.website || '');
+        formDataToSend.append('customerRequest', formData.customerRequest || '');
+        formDataToSend.append('isR1Reciept', String(formData.isR1Reciept));
+        formDataToSend.append('companyName', formData.companyName || '');
+        formDataToSend.append('companyOIB', formData.companyOIB || '');
 
-        await api.post("/orders", {
-            paymentIntentId: paymentIntent.id,
-            nameAndLastName: formData.nameAndLastName,
-            eMail: formData.eMail,
-            phoneNumber: formData.phoneNumber,
-            website: formData.website,
-            customerRequest: formData.customerRequest,
-            isR1Reciept: formData.isR1Reciept,
-            companyName: formData.companyName,
-            companyOIB: formData.companyOIB
+        files.forEach((file) => {
+          formDataToSend.append('files', file);
         });
+
+        await api.post("/orders", formDataToSend);
 
         onSuccess();
       }
@@ -166,7 +171,7 @@ function CheckoutForm({ formData, amount, onSuccess, onCancel }: PaymentModalPro
   );
 }
 
-export default function StripePaymentModal({ formData, amount, onSuccess, onCancel }: PaymentModalProps) {
+export default function StripePaymentModal({ formData, files, amount, onSuccess, onCancel }: PaymentModalProps) {
   const [clientSecret, setClientSecret] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
@@ -269,8 +274,9 @@ export default function StripePaymentModal({ formData, amount, onSuccess, onCanc
 
   return (
     <Elements stripe={stripePromise} options={options}>
-      <CheckoutForm 
+      <CheckoutForm
         formData={formData}
+        files={files}
         amount={amount}
         onSuccess={onSuccess}
         onCancel={onCancel}

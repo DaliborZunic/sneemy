@@ -1,9 +1,24 @@
 import "./PaymentForm.css";
 import checkboxUncheckedIcon from "../../../../assets/checkbox-unchecked.svg";
 import checkboxCheckedIcon from "../../../../assets/checkbox-checked.svg";
-import { useState } from "react";
-import type { ChangeEvent } from "react";
+import { useState, useRef } from "react";
+import type { ChangeEvent, DragEvent } from "react";
 import StripePaymentModal from "./components/StripePaymentModal/StripePaymentModal";
+
+const MAX_TOTAL_SIZE = 25 * 1024 * 1024; // 25MB
+const ALLOWED_EXTENSIONS = ['.pdf', '.ppt', '.pptx', '.doc', '.docx', '.txt', '.jpeg', '.jpg', '.png', '.gif', '.zip', '.rar'];
+const BLOCKED_EXTENSIONS = ['.exe', '.bat', '.cmd', '.com', '.msi', '.scr', '.ps1', '.vbs', '.js', '.dll'];
+
+const getFileExtension = (filename: string): string => {
+  const lastDot = filename.lastIndexOf('.');
+  return lastDot >= 0 ? filename.substring(lastDot).toLowerCase() : '';
+};
+
+const formatFileSize = (bytes: number): string => {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+};
 
 // Croatian OIB validation using ISO 7064, MOD 11-10 algorithm
 const isValidOib = (oib: string): boolean => {
@@ -51,6 +66,7 @@ type FieldErrors = {
   website?: string;
   companyName?: string;
   companyOIB?: string;
+  files?: string;
 };
 
 export default function PaymentForm() {
@@ -68,8 +84,81 @@ export default function PaymentForm() {
   const [errors, setErrors] = useState<FieldErrors>({});
   const [success, setSuccess] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [files, setFiles] = useState<File[]>([]);
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const ORDER_AMOUNT = 100;
+
+  const getTotalFileSize = (fileList: File[]): number => {
+    return fileList.reduce((sum, file) => sum + file.size, 0);
+  };
+
+  const validateFiles = (newFiles: File[]): string | null => {
+    for (const file of newFiles) {
+      const ext = getFileExtension(file.name);
+      if (BLOCKED_EXTENSIONS.includes(ext)) {
+        return `Vrsta datoteke '${ext}' nije dozvoljena`;
+      }
+      if (!ALLOWED_EXTENSIONS.includes(ext)) {
+        return `Vrsta datoteke '${ext}' nije podržana`;
+      }
+    }
+
+    const totalSize = getTotalFileSize([...files, ...newFiles]);
+    if (totalSize > MAX_TOTAL_SIZE) {
+      return `Ukupna veličina datoteka prelazi 25MB limit (${formatFileSize(totalSize)})`;
+    }
+
+    return null;
+  };
+
+  const handleFiles = (newFiles: FileList | null) => {
+    if (!newFiles || newFiles.length === 0) return;
+
+    const fileArray = Array.from(newFiles);
+    const error = validateFiles(fileArray);
+
+    if (error) {
+      setErrors(prev => ({ ...prev, files: error }));
+      return;
+    }
+
+    setErrors(prev => ({ ...prev, files: undefined }));
+    setFiles(prev => [...prev, ...fileArray]);
+  };
+
+  const removeFile = (index: number) => {
+    setFiles(prev => prev.filter((_, i) => i !== index));
+    setErrors(prev => ({ ...prev, files: undefined }));
+  };
+
+  const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+    handleFiles(e.dataTransfer.files);
+  };
+
+  const handleFileInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    handleFiles(e.target.files);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  const openFileDialog = () => {
+    fileInputRef.current?.click();
+  };
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -139,6 +228,7 @@ export default function PaymentForm() {
     setShowPaymentModal(false);
     setSuccess(true);
     setErrors({});
+    setFiles([]);
 
     setFormData({
       nameAndLastName: "",
@@ -227,8 +317,48 @@ export default function PaymentForm() {
           </div>
 
           <div className="form-row">
-            <div className="upload-field">
-              <span>ovdje povucite svoj logo, fotografije, brošure...</span>
+            <div className="upload-wrapper">
+              <input
+                ref={fileInputRef}
+                type="file"
+                multiple
+                accept=".pdf,.ppt,.pptx,.doc,.docx,.txt,.jpeg,.jpg,.png,.gif,.zip,.rar"
+                onChange={handleFileInputChange}
+                style={{ display: 'none' }}
+              />
+              <div
+                className={`upload-field ${isDragging ? 'upload-field-dragging' : ''}`}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                onClick={openFileDialog}
+              >
+                <span>ovdje povucite svoj logo, fotografije, brošure... ili kliknite za odabir</span>
+              </div>
+              {files.length > 0 && (
+                <div className="file-pills">
+                  {files.map((file, index) => (
+                    <div key={`${file.name}-${index}`} className="file-pill">
+                      <span className="file-pill-name">{file.name}</span>
+                      <span className="file-pill-size">({formatFileSize(file.size)})</span>
+                      <button
+                        type="button"
+                        className="file-pill-remove"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          removeFile(index);
+                        }}
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ))}
+                  <div className="file-total-size">
+                    Ukupno: {formatFileSize(getTotalFileSize(files))} / 25 MB
+                  </div>
+                </div>
+              )}
+              {errors.files && <span className="field-error">{errors.files}</span>}
             </div>
           </div>
 
@@ -290,6 +420,7 @@ export default function PaymentForm() {
         {showPaymentModal && (
           <StripePaymentModal
             formData={formData}
+            files={files}
             amount={ORDER_AMOUNT}
             onSuccess={handlePaymentSuccess}
             onCancel={handlePaymentCancel}

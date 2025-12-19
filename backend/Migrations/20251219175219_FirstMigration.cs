@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Sneemy.API.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class FirstMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -40,7 +40,8 @@ namespace Sneemy.API.Migrations
                     CompanyName = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: true),
                     CompanyOIB = table.Column<string>(type: "character varying(11)", maxLength: 11, nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    StripePaymentIntentId = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false)
+                    StripePaymentIntentId = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    FilesAttached = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {

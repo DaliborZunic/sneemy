@@ -62,6 +62,10 @@
     padding: 1rem;
 }
 
+.upload-wrapper {
+    width: 100%;
+}
+
 .upload-field {
     background-color: #5500c9;
     color: #ccb7e9;
@@ -73,6 +77,71 @@
     place-items: center;
     font-weight: 700;
     font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.upload-field:hover {
+    background-color: #6600dd;
+    border-color: #fbfe00;
+}
+
+.upload-field-dragging {
+    background-color: #6600dd;
+    border-color: #fbfe00;
+    border-width: 2px;
+}
+
+.file-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.file-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: #6600dd;
+    padding: 0.4rem 0.8rem;
+    border-radius: 2rem;
+    font-size: 0.9rem;
+}
+
+.file-pill-name {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.file-pill-size {
+    color: #ccb7e9;
+    font-size: 0.8rem;
+}
+
+.file-pill-remove {
+    background: none;
+    border: none;
+    color: #ff6b6b;
+    cursor: pointer;
+    padding: 0;
+    font-size: 0.9rem;
+    line-height: 1;
+    margin-left: 0.2rem;
+}
+
+.file-pill-remove:hover {
+    color: #ff4444;
+}
+
+.file-total-size {
+    width: 100%;
+    text-align: right;
+    font-size: 0.85rem;
+    color: #ccb7e9;
+    margin-top: 0.25rem;
 }
 
 .pay-video-button {

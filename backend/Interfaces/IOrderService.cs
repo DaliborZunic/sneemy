@@ -1,4 +1,5 @@
-﻿using Sneemy.API.Models.DTOs;
+﻿using Microsoft.AspNetCore.Http;
+using Sneemy.API.Models.DTOs;
 
 namespace Sneemy.API.Services
 {
@@ -12,6 +13,6 @@ namespace Sneemy.API.Services
 
         // Payment-related operations
         Task<PaymentIntentResponseDto> CreatePaymentIntentAsync(CreatePaymentIntentDto dto);
-        Task<OrderDto> CreateOrderWithPaymentAsync(CreateOrderWithPaymentDto dto);
+        Task<OrderDto> CreateOrderWithPaymentAsync(CreateOrderWithPaymentDto dto, List<IFormFile>? files);
     }
 }

@@ -180,6 +180,9 @@ namespace Sneemy.API.Migrations
                         .HasMaxLength(254)
                         .HasColumnType("character varying(254)");
 
+                    b.Property<bool>("FilesAttached")
+                        .HasColumnType("boolean");
+
                     b.Property<bool>("IsR1Reciept")
                         .HasColumnType("boolean");
 

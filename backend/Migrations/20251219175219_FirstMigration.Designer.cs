@@ -12,8 +12,8 @@ using Sneemy.API.Data;
 namespace Sneemy.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251219133057_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20251219175219_FirstMigration")]
+    partial class FirstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -182,6 +182,9 @@ namespace Sneemy.API.Migrations
                         .IsRequired()
                         .HasMaxLength(254)
                         .HasColumnType("character varying(254)");
+
+                    b.Property<bool>("FilesAttached")
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("IsR1Reciept")
                         .HasColumnType("boolean");

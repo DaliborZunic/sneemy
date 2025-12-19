@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Sneemy.API.Data;
 using Sneemy.API.Exceptions;
 using Sneemy.API.Interfaces;
@@ -11,11 +12,13 @@ namespace Sneemy.API.Services
     {
         private readonly ApplicationDbContext _context;
         private readonly IStripeService _stripeService;
+        private readonly IEmailService _emailService;
 
-        public OrderService(ApplicationDbContext context, IStripeService stripeService)
+        public OrderService(ApplicationDbContext context, IStripeService stripeService, IEmailService emailService)
         {
             _context = context;
             _stripeService = stripeService;
+            _emailService = emailService;
         }
 
         public async Task<PaymentIntentResponseDto> CreatePaymentIntentAsync(CreatePaymentIntentDto dto)
@@ -29,14 +32,17 @@ namespace Sneemy.API.Services
             };
         }
 
-        public async Task<OrderDto> CreateOrderWithPaymentAsync(CreateOrderWithPaymentDto dto)
+        public async Task<OrderDto> CreateOrderWithPaymentAsync(CreateOrderWithPaymentDto dto, List<IFormFile>? files)
         {
             var paymentValid = await _stripeService.VerifyPaymentAsync(dto.PaymentIntentId);
 
             if (!paymentValid)
                 throw new BadRequestException("Payment not confirmed or failed");
 
-            var createOrderDto = new CreateOrderDto
+            var hasFiles = files != null && files.Count > 0;
+            var createdAt = DateTime.UtcNow;
+
+            var order = new Order
             {
                 NameAndLastName = dto.NameAndLastName,
                 EMail = dto.EMail,
@@ -46,10 +52,32 @@ namespace Sneemy.API.Services
                 IsR1Reciept = dto.IsR1Reciept,
                 CompanyName = dto.CompanyName,
                 CompanyOIB = dto.CompanyOIB,
-                StripePaymentIntentId = dto.PaymentIntentId
+                CreatedAt = createdAt,
+                StripePaymentIntentId = dto.PaymentIntentId,
+                FilesAttached = hasFiles
             };
 
-            return await CreateAsync(createOrderDto);
+            _context.Orders.Add(order);
+            await _context.SaveChangesAsync();
+
+            // Send email with order details and files (don't fail if email fails)
+            var emailData = new OrderEmailData
+            {
+                CustomerName = dto.NameAndLastName,
+                CustomerEmail = dto.EMail,
+                CustomerPhone = dto.PhoneNumber,
+                CustomerWebsite = dto.Website,
+                CustomerRequest = dto.CustomerRequest,
+                IsR1Receipt = dto.IsR1Reciept,
+                CompanyName = dto.CompanyName,
+                CompanyOIB = dto.CompanyOIB,
+                StripePaymentIntentId = dto.PaymentIntentId,
+                CreatedAt = createdAt
+            };
+
+            await _emailService.SendOrderEmailAsync(emailData, files);
+
+            return MapToDto(order);
         }
 
         public async Task<IEnumerable<OrderDto>> GetAllAsync()
@@ -68,35 +96,20 @@ namespace Sneemy.API.Services
                     CompanyName = o.CompanyName,
                     CompanyOIB = o.CompanyOIB,
                     CreatedAt = o.CreatedAt,
-                    StripePaymentIntentId = o.StripePaymentIntentId
+                    StripePaymentIntentId = o.StripePaymentIntentId,
+                    FilesAttached = o.FilesAttached
                 })
                 .ToListAsync();
         }
 
         public async Task<OrderDto> GetByIdAsync(Guid id)
         {
-            var order = await _context.Orders
-                .Where(o => o.Id == id)
-                .Select(o => new OrderDto
-                {
-                    Id = o.Id,
-                    NameAndLastName = o.NameAndLastName,
-                    EMail = o.EMail,
-                    PhoneNumber = o.PhoneNumber,
-                    Website = o.Website,
-                    CustomerRequest = o.CustomerRequest,
-                    IsR1Reciept = o.IsR1Reciept,
-                    CompanyName = o.CompanyName,
-                    CompanyOIB = o.CompanyOIB,
-                    CreatedAt = o.CreatedAt,
-                    StripePaymentIntentId = o.StripePaymentIntentId
-                })
-                .FirstOrDefaultAsync();
+            var order = await _context.Orders.FindAsync(id);
 
             if (order == null)
                 throw new NotFoundException("Order not found");
 
-            return order;
+            return MapToDto(order);
         }
 
         public async Task<OrderDto> CreateAsync(CreateOrderDto dto)
@@ -112,26 +125,14 @@ namespace Sneemy.API.Services
                 CompanyName = dto.CompanyName,
                 CompanyOIB = dto.CompanyOIB,
                 CreatedAt = DateTime.UtcNow,
-                StripePaymentIntentId = dto.StripePaymentIntentId
+                StripePaymentIntentId = dto.StripePaymentIntentId,
+                FilesAttached = false
             };
 
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
-            return new OrderDto
-            {
-                Id = order.Id,
-                NameAndLastName = order.NameAndLastName,
-                EMail = order.EMail,
-                PhoneNumber = order.PhoneNumber,
-                Website = order.Website,
-                CustomerRequest = order.CustomerRequest,
-                IsR1Reciept = order.IsR1Reciept,
-                CompanyName = order.CompanyName,
-                CompanyOIB = order.CompanyOIB,
-                CreatedAt = order.CreatedAt,
-                StripePaymentIntentId = order.StripePaymentIntentId
-            };
+            return MapToDto(order);
         }
 
         public async Task UpdateAsync(Guid id, CreateOrderDto dto)
@@ -160,6 +161,25 @@ namespace Sneemy.API.Services
 
             _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
+        }
+
+        private static OrderDto MapToDto(Order order)
+        {
+            return new OrderDto
+            {
+                Id = order.Id,
+                NameAndLastName = order.NameAndLastName,
+                EMail = order.EMail,
+                PhoneNumber = order.PhoneNumber,
+                Website = order.Website,
+                CustomerRequest = order.CustomerRequest,
+                IsR1Reciept = order.IsR1Reciept,
+                CompanyName = order.CompanyName,
+                CompanyOIB = order.CompanyOIB,
+                CreatedAt = order.CreatedAt,
+                StripePaymentIntentId = order.StripePaymentIntentId,
+                FilesAttached = order.FilesAttached
+            };
         }
     }
 }

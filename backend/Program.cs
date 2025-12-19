@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Sneemy.API.Configuration;
 using Sneemy.API.Data;
 using Sneemy.API.Interfaces;
 using Sneemy.API.Middleware;
@@ -57,12 +58,16 @@ namespace Sneemy.API
                 };
             });
 
+            // Configure Email Settings
+            builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+
             // Register Services
             builder.Services.AddScoped<IJwtService, JwtService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IOrderService, OrderService>();
             builder.Services.AddScoped<IStripeService, StripeService>();
+            builder.Services.AddScoped<IEmailService, EmailService>();
 
             // Services
             builder.Services.AddControllers();

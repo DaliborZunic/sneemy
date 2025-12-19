@@ -36,5 +36,7 @@ namespace Sneemy.API.Models
         [Required]
         [MaxLength(255)]
         public string StripePaymentIntentId { get; set; } = null!;
+
+        public bool FilesAttached { get; set; }
     }
 }

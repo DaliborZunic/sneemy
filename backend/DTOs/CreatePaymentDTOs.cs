@@ -22,9 +22,9 @@
         // Original order fields
         public string NameAndLastName { get; set; } = string.Empty;
         public string EMail { get; set; } = string.Empty;
-        public string PhoneNumber { get; set; } = string.Empty;
+        public string? PhoneNumber { get; set; }
         public string? Website { get; set; }
-        public string CustomerRequest { get; set; } = string.Empty;
+        public string? CustomerRequest { get; set; }
         public bool IsR1Reciept { get; set; }
         public string? CompanyName { get; set; }
         public string? CompanyOIB { get; set; }
