@@ -32,5 +32,9 @@ namespace Sneemy.API.Models
         public string? CompanyOIB { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        [Required]
+        [MaxLength(255)]
+        public string StripePaymentIntentId { get; set; } = null!;
     }
 }

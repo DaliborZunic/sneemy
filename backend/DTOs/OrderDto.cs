@@ -12,5 +12,6 @@
         public string? CompanyName { get; set; }
         public string? CompanyOIB { get; set; }
         public DateTime CreatedAt { get; set; }
+        public string StripePaymentIntentId { get; set; } = null!;
     }
 }

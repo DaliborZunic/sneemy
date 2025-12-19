@@ -31,15 +31,16 @@ namespace Sneemy.API.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    NameAndLastName = table.Column<string>(type: "text", nullable: false),
-                    EMail = table.Column<string>(type: "text", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "text", nullable: true),
-                    Website = table.Column<string>(type: "text", nullable: true),
-                    CustomerRequest = table.Column<string>(type: "text", nullable: true),
+                    NameAndLastName = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    EMail = table.Column<string>(type: "character varying(254)", maxLength: 254, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    Website = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    CustomerRequest = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: true),
                     IsR1Reciept = table.Column<bool>(type: "boolean", nullable: false),
-                    CompanyName = table.Column<string>(type: "text", nullable: true),
-                    CompanyOIB = table.Column<string>(type: "text", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    CompanyName = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: true),
+                    CompanyOIB = table.Column<string>(type: "character varying(11)", maxLength: 11, nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    StripePaymentIntentId = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {

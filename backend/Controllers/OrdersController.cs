@@ -85,7 +85,8 @@ namespace Sneemy.API.Controllers
                 CustomerRequest = dto.CustomerRequest,
                 IsR1Reciept = dto.IsR1Reciept,
                 CompanyName = dto.CompanyName,
-                CompanyOIB = dto.CompanyOIB
+                CompanyOIB = dto.CompanyOIB,
+                StripePaymentIntentId = dto.PaymentIntentId
             };
 
             var created = await _orderService.CreateAsync(createOrderDto);

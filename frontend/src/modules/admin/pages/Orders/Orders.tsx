@@ -14,6 +14,7 @@ export interface Order {
     companyName: string | null;
     companyOIB: string | null;
     createdAt: string;
+    stripePaymentIntentId: string;
 }
 
 const formatOrderDate = (isoDate: string) => {

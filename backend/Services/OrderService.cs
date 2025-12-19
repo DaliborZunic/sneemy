@@ -29,7 +29,8 @@ namespace Sneemy.API.Services
                     IsR1Reciept = o.IsR1Reciept,
                     CompanyName = o.CompanyName,
                     CompanyOIB = o.CompanyOIB,
-                    CreatedAt = o.CreatedAt
+                    CreatedAt = o.CreatedAt,
+                    StripePaymentIntentId = o.StripePaymentIntentId
                 })
                 .ToListAsync();
         }
@@ -49,7 +50,8 @@ namespace Sneemy.API.Services
                     IsR1Reciept = o.IsR1Reciept,
                     CompanyName = o.CompanyName,
                     CompanyOIB = o.CompanyOIB,
-                    CreatedAt = o.CreatedAt
+                    CreatedAt = o.CreatedAt,
+                    StripePaymentIntentId = o.StripePaymentIntentId
                 })
                 .FirstOrDefaultAsync();
         }
@@ -66,7 +68,8 @@ namespace Sneemy.API.Services
                 IsR1Reciept = dto.IsR1Reciept,
                 CompanyName = dto.CompanyName,
                 CompanyOIB = dto.CompanyOIB,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.UtcNow,
+                StripePaymentIntentId = dto.StripePaymentIntentId
             };
 
             _context.Orders.Add(order);
@@ -83,7 +86,8 @@ namespace Sneemy.API.Services
                 IsR1Reciept = order.IsR1Reciept,
                 CompanyName = order.CompanyName,
                 CompanyOIB = order.CompanyOIB,
-                CreatedAt = order.CreatedAt
+                CreatedAt = order.CreatedAt,
+                StripePaymentIntentId = order.StripePaymentIntentId
             };
         }
 

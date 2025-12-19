@@ -31,5 +31,9 @@ namespace Sneemy.API.Models.DTOs
         [RequiredIf(nameof(IsR1Reciept), true, ErrorMessage = "Company OIB is required for R1 receipt.")]
         [CroatianOib(ErrorMessage = "Invalid Croatian OIB. Must be 11 digits with valid check digit.")]
         public string? CompanyOIB { get; set; }
+
+        [Required(ErrorMessage = "Stripe PaymentIntent ID is required.")]
+        [StringLength(255, ErrorMessage = "Stripe PaymentIntent ID cannot exceed 255 characters.")]
+        public string StripePaymentIntentId { get; set; } = null!;
     }
 }
