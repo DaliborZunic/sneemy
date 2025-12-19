@@ -84,10 +84,11 @@ function CheckoutForm({ formData, amount, onSuccess, onCancel }: PaymentModalPro
       bottom: 0,
       backgroundColor: "rgba(0,0,0,0.7)",
       display: "flex",
-      alignItems: "center",
+      alignItems: "flex-start",
       justifyContent: "center",
       zIndex: 1000,
-      padding: "20px"
+      padding: "20px",
+      overflowY: "auto"
     }}>
       <div style={{
         backgroundColor: "white",
@@ -95,7 +96,10 @@ function CheckoutForm({ formData, amount, onSuccess, onCancel }: PaymentModalPro
         borderRadius: "12px",
         maxWidth: "500px",
         width: "100%",
-        boxShadow: "0 4px 6px rgba(0,0,0,0.1)"
+        maxHeight: "90vh",
+        overflowY: "auto",
+        boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+        margin: "auto 0"
       }}>
         <h2 style={{ marginTop: 0 }}>Dovršite plaćanje</h2>
         <p style={{ marginBottom: "25px", fontSize: "18px", fontWeight: "bold" }}>
