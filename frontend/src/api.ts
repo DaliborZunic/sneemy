@@ -10,6 +10,30 @@ export const setToken = (token: string | null) => {
   else localStorage.removeItem("auth_token");
 };
 
+export const isTokenValid = (token: string | null): boolean => {
+  if (!token) return false;
+
+  try {
+    const parts = token.split(".");
+    if (parts.length !== 3) return false;
+
+    const payload = JSON.parse(atob(parts[1]));
+    if (!payload.exp) return false;
+
+    // exp is in seconds, Date.now() is in milliseconds
+    const expirationTime = payload.exp * 1000;
+    return Date.now() < expirationTime;
+  } catch {
+    return false;
+  }
+};
+
+// Callback for when auth becomes invalid (set by AuthContext)
+let onAuthInvalid: (() => void) | null = null;
+export const setOnAuthInvalid = (callback: (() => void) | null) => {
+  onAuthInvalid = callback;
+};
+
 api.interceptors.request.use((config: any) => {
   const token = getToken();
   if (token) {
@@ -18,5 +42,16 @@ api.interceptors.request.use((config: any) => {
   }
   return config;
 });
+
+// Response interceptor to handle 401 (unauthorized) responses
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401 && onAuthInvalid) {
+      onAuthInvalid();
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default api;
