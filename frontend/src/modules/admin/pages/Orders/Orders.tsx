@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Orders.css"
 import { useAuth } from "../../../../auth/AuthContext";
 import api from "../../../../api";
@@ -29,8 +30,9 @@ const formatOrderDate = (isoDate: string) => {
 };
 
 
-export default function Dashboard() {
+export default function Orders() {
     const { token } = useAuth();
+    const navigate = useNavigate();
     const [orders, setOrders] = useState<Order[]>([]);
 
     useEffect(() => {
@@ -56,13 +58,18 @@ export default function Dashboard() {
                         <th>Vrijeme narudžbe</th>
                     </tr>
                     {
-                        orders.map(order => <tr key={order.id}>
-                            <td>{order.nameAndLastName}</td>
-                            <td>{order.eMail}</td>
-                            <td>{order.website || "-"}</td>
-                            <td>{formatOrderDate(order.createdAt)}</td>
-
-                        </tr>)
+                        orders.map(order => (
+                            <tr
+                                key={order.id}
+                                onClick={() => navigate(`/admin/orders/${order.id}`)}
+                                className="clickable-row"
+                            >
+                                <td>{order.nameAndLastName}</td>
+                                <td>{order.eMail}</td>
+                                <td>{order.website || "-"}</td>
+                                <td>{formatOrderDate(order.createdAt)}</td>
+                            </tr>
+                        ))
                     }
                 </table>
             </div>

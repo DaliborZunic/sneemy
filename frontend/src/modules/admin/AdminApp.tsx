@@ -7,6 +7,7 @@ import ProtectedRoute from "../../auth/ProtectedRoute";
 import Sidebar from "./components/Sidebar/Sidebar";
 
 const Orders = lazy(() => import("./pages/Orders/Orders"));
+const OrderDetails = lazy(() => import("./pages/Orders/OrderDetails"));
 const Users = lazy(() => import("./pages/Users"));
 
 interface AdminLayoutProps {
@@ -73,6 +74,7 @@ export default function AdminApp() {
                 >
                     <Route index element={<Orders />} />
                     <Route path="orders" element={<Orders />} />
+                    <Route path="orders/:id" element={<OrderDetails />} />
                     <Route path="users" element={<Users />} />
                     <Route path="*" element={<div>404 – Admin section</div>} />
                 </Route>

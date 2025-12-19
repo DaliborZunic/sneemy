@@ -12,6 +12,15 @@
     width: 100%;
 }
 
+.orders-wrapper .table-wrapper table tr.clickable-row {
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.orders-wrapper .table-wrapper table tr.clickable-row:hover {
+    background-color: #f5f5f5;
+}
+
 @media (max-width: 1020px) {
     .orders-wrapper .table-wrapper table tr {
         height: 3rem;
