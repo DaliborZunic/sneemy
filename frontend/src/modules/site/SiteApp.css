@@ -2,9 +2,8 @@
 
 .site-root {
     font-family: 'Outfit', sans-serif;
-    height: 100%;
+    min-height: 100%;
     font-weight: 400;
-    overflow-y: scroll;
     display: flex;
     flex-direction: column;
 }
