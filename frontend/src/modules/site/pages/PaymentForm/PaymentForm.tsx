@@ -473,9 +473,9 @@ export default function PaymentForm() {
           <button
             className="pay-video-button"
             onClick={onPayButton}
-            disabled={showPaymentModal || orderAmount === 0}
+            disabled={showPaymentModal || !selectedServiceId}
           >
-            Plati €{orderAmount.toFixed(2)}
+            {selectedServiceId ? `Plati €${orderAmount.toFixed(2)}` : "Odaberite uslugu iznad"}
           </button>
         </div>
 

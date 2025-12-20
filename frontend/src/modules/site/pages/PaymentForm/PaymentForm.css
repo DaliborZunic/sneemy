@@ -177,6 +177,15 @@
     font-size: 1.3rem;
     font-weight: 800;
     font-family: 'Outfit', sans-serif;
+    border: none;
+    cursor: pointer;
+}
+
+.pay-video-button:disabled {
+    background-color: #fbfe00;
+    color: #000;
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .checkbox-wrapper {
