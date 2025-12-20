@@ -1,7 +1,7 @@
 import "./UserAvatar.css";
 import moreItemsIcon from "../../../../../../assets/more-items-icon.svg";
 import UserAvatarMenu from "./components/UserAvatarMenu/UserAvatarMenu";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useAuth } from "../../../../../../auth/AuthContext";
 
 interface UserAvatarProps {
@@ -11,6 +11,23 @@ interface UserAvatarProps {
 export default function UserAvatar({logout}: UserAvatarProps) {
     const { user } = useAuth();
     const [menuShown, setMenuShown] = useState<boolean>(false);
+    const wrapperRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+                setMenuShown(false);
+            }
+        };
+
+        if (menuShown) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [menuShown]);
 
     const onSetMenuShown = () => {
         setMenuShown(prev => !prev)
@@ -34,7 +51,7 @@ export default function UserAvatar({logout}: UserAvatarProps) {
     };
 
     return (
-        <div className="user-avatar-wrapper" onClick={onSetMenuShown}>
+        <div className="user-avatar-wrapper" ref={wrapperRef} onClick={onSetMenuShown}>
             <div className="avatar-image-wrapper">
                 <span>{getInitials()}</span>
             </div>
