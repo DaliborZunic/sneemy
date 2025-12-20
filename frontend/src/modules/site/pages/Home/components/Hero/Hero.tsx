@@ -25,7 +25,7 @@ const Hero = () => {
                 <img className="hero-logo" src={facebookLogo} alt="facebook" />
                 <img className="hero-logo youtube-logo" src={youTubeLogo} alt="YouTube" />
               </div>
-              <Link className="hero-button-link" to="/about-us">Naruči video</Link>
+              <Link className="hero-button-link" to="/payment-form">Naruči video</Link>
             </div>
           </div>
         </div>

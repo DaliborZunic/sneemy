@@ -6,6 +6,7 @@ import Footer from "./pages/Home/components/Footer/Footer";
 
 const Home = lazy(() => import("./pages/Home/Home"));
 const PaymentForm = lazy(() => import("./pages/PaymentForm/PaymentForm"));
+const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
 
 export default function SiteApp() {
     return (
@@ -16,7 +17,7 @@ export default function SiteApp() {
                 <Routes>
                     <Route index element={<Home />} />
                     <Route path="payment-form" element={<PaymentForm />} />
-                    <Route path="*" element={<div>404 – Page not found</div>} />
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
             </Suspense>
             <Footer />

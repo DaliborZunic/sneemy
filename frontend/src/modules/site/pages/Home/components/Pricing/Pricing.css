@@ -81,6 +81,7 @@
 .price-item-link-cta {
     background-color: #fbfe00;
     color: black;
+    border: none;
 }
 
 .price-item-wrapper {
