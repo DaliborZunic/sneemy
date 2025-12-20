@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
@@ -43,8 +43,27 @@ function CheckoutForm({ formData, files, serviceId, amount, onSuccess, onCancel 
     setError("");
 
     try {
+      // First, validate the payment element inputs
+      const { error: submitError } = await elements.submit();
+      if (submitError) {
+        setError(submitError.message || "Plaćanje nije uspjelo");
+        setIsProcessing(false);
+        return;
+      }
+
+      // Create PaymentIntent only when user clicks Pay (deferred creation)
+      const response = await api.post("/orders/create-payment-intent", {
+        serviceId: serviceId
+      });
+      const { clientSecret } = response.data;
+
+      // Now confirm the payment with the newly created PaymentIntent
       const { error: stripeError, paymentIntent } = await stripe.confirmPayment({
         elements,
+        clientSecret,
+        confirmParams: {
+          return_url: window.location.href,
+        },
         redirect: "if_required",
       });
 
@@ -174,100 +193,11 @@ function CheckoutForm({ formData, files, serviceId, amount, onSuccess, onCancel 
 }
 
 export default function StripePaymentModal({ formData, files, serviceId, amount, onSuccess, onCancel }: PaymentModalProps) {
-  const [clientSecret, setClientSecret] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [intentCreated, setIntentCreated] = useState(false);
-
-  useEffect(() => {
-  if (!intentCreated) {
-    createPaymentIntent();
-    setIntentCreated(true);
-  }
-}, [intentCreated]);
-
-  const createPaymentIntent = async () => {
-    try {
-      const response = await api.post("/orders/create-payment-intent", {
-        serviceId: serviceId
-      });
-
-      setClientSecret(response.data.clientSecret);
-      setIsLoading(false);
-    } catch (err: any) {
-      console.error("Payment intent error:", err);
-      setError("Nije moguće inicijalizirati plaćanje");
-      setIsLoading(false);
-    }
-  };
-
-  if (isLoading) {
-    return (
-      <div style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: "rgba(0,0,0,0.7)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        zIndex: 1000
-      }}>
-        <div style={{
-          backgroundColor: "white",
-          padding: "30px",
-          borderRadius: "12px",
-          textAlign: "center"
-        }}>
-          <p>Učitavam obrazac za plaćanje...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: "rgba(0,0,0,0.7)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        zIndex: 1000
-      }}>
-        <div style={{
-          backgroundColor: "white",
-          padding: "30px",
-          borderRadius: "12px",
-          textAlign: "center"
-        }}>
-          <p style={{ color: "#dc3545", marginBottom: "20px" }}>{error}</p>
-          <button
-            onClick={onCancel}
-            style={{
-              padding: "10px 20px",
-              backgroundColor: "#6c757d",
-              color: "white",
-              border: "none",
-              borderRadius: "6px",
-              cursor: "pointer"
-            }}
-          >
-            Zatvori
-          </button>
-        </div>
-      </div>
-    );
-  }
-
+  // Use deferred intent creation - no PaymentIntent created until user clicks Pay
   const options = {
-    clientSecret,
+    mode: 'payment' as const,
+    amount: Math.round(amount * 100), // Convert to cents
+    currency: 'eur',
     appearance: {
       theme: "stripe" as const,
     },
