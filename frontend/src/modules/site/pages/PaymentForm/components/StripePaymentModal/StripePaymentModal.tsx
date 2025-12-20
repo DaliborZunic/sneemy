@@ -108,8 +108,8 @@ function CheckoutForm({ formData, files, serviceId, amount, onSuccess, onCancel 
         boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
         margin: "auto 0"
       }}>
-        <h2 style={{ marginTop: 0 }}>Dovršite plaćanje</h2>
-        <p style={{ marginBottom: "25px", fontSize: "18px", fontWeight: "bold" }}>
+        <h2 style={{ marginTop: 0, color: "#1a1a1a" }}>Dovršite plaćanje</h2>
+        <p style={{ marginBottom: "25px", fontSize: "18px", fontWeight: "bold", color: "#4500a2" }}>
           Iznos: €{amount.toFixed(2)}
         </p>
 
