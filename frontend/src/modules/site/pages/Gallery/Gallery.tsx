@@ -7,20 +7,21 @@ import VideoModal from "./components/VideoModal/VideoModal";
 export interface GalleryVideo {
     id: string;
     clientName: string;
-    youtubeId: string;
+    vimeoId: string;
     type: "reel" | "landscape";
 }
 
 // Hardcoded video data - update this array when adding new videos
+// To get Vimeo ID: from URL https://vimeo.com/123456789 the ID is 123456789
 const galleryVideos: GalleryVideo[] = [
     // Reel-style (portrait) videos
-    { id: "1", clientName: "Sample Company", youtubeId: "dQw4w9WgXcQ", type: "reel" },
-    { id: "2", clientName: "Another Client", youtubeId: "dQw4w9WgXcQ", type: "reel" },
-    { id: "3", clientName: "Brand Name", youtubeId: "dQw4w9WgXcQ", type: "reel" },
+    { id: "1", clientName: "Sample Company", vimeoId: "824804225", type: "reel" },
+    { id: "2", clientName: "Another Client", vimeoId: "824804225", type: "reel" },
+    { id: "3", clientName: "Brand Name", vimeoId: "824804225", type: "reel" },
     // Landscape (YouTube-style) videos
-    { id: "4", clientName: "Company ABC", youtubeId: "dQw4w9WgXcQ", type: "landscape" },
-    { id: "5", clientName: "Business XYZ", youtubeId: "dQw4w9WgXcQ", type: "landscape" },
-    { id: "6", clientName: "Client Corp", youtubeId: "dQw4w9WgXcQ", type: "landscape" },
+    { id: "4", clientName: "Company ABC", vimeoId: "824804225", type: "landscape" },
+    { id: "5", clientName: "Business XYZ", vimeoId: "824804225", type: "landscape" },
+    { id: "6", clientName: "Client Corp", vimeoId: "824804225", type: "landscape" },
 ];
 
 type VideoType = "reel" | "landscape";

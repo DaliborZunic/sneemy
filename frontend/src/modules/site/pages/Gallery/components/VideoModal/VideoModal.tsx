@@ -45,10 +45,10 @@ export default function VideoModal({ video, onClose }: VideoModalProps) {
 
             <div className={`video-modal-content ${isReel ? "reel-video" : "landscape-video"}`}>
                 <iframe
-                    src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}?autoplay=1&rel=0&playsinline=1`}
+                    src={`https://player.vimeo.com/video/${video.vimeoId}?autoplay=1&playsinline=1`}
                     title={video.clientName}
                     frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allow="autoplay; fullscreen; picture-in-picture"
                     allowFullScreen
                 />
             </div>

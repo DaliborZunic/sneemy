@@ -7,8 +7,8 @@ interface LandscapeGalleryProps {
 }
 
 export default function LandscapeGallery({ videos, onVideoClick }: LandscapeGalleryProps) {
-    const getThumbnailUrl = (youtubeId: string) => {
-        return `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`;
+    const getThumbnailUrl = (vimeoId: string) => {
+        return `https://vumbnail.com/${vimeoId}.jpg`;
     };
 
     return (
@@ -20,7 +20,7 @@ export default function LandscapeGallery({ videos, onVideoClick }: LandscapeGall
                         onClick={() => onVideoClick(video)}
                     >
                         <img
-                            src={getThumbnailUrl(video.youtubeId)}
+                            src={getThumbnailUrl(video.vimeoId)}
                             alt={video.clientName}
                             className="landscape-thumbnail"
                         />
