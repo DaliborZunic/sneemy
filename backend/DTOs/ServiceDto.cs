@@ -7,5 +7,6 @@ namespace Sneemy.API.Models.DTOs
         public string Description { get; set; } = null!;
         public decimal Price { get; set; }
         public List<string> Features { get; set; } = new();
+        public string VideoType { get; set; } = null!;
     }
 }

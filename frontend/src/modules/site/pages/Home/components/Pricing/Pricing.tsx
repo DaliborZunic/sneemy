@@ -9,6 +9,7 @@ interface Service {
     description: string;
     price: number;
     features: string[];
+    videoType: "reel" | "landscape";
 }
 
 const Pricing = () => {

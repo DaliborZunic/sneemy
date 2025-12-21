@@ -22,5 +22,9 @@ namespace Sneemy.API.Models
         public bool IsActive { get; set; } = true;
 
         public int DisplayOrder { get; set; }
+
+        [Required]
+        [MaxLength(20)]
+        public string VideoType { get; set; } = "landscape"; // "reel" for portrait, "landscape" for YouTube-style
     }
 }

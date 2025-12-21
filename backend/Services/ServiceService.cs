@@ -25,7 +25,8 @@ namespace Sneemy.API.Services
                     Name = s.Name,
                     Description = s.Description,
                     Price = s.Price,
-                    Features = s.Features
+                    Features = s.Features,
+                    VideoType = s.VideoType
                 })
                 .ToListAsync();
         }

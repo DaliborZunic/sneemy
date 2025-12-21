@@ -7,6 +7,7 @@ interface Service {
     description: string;
     price: number;
     features: string[];
+    videoType: "reel" | "landscape";
 }
 
 interface PriceTableItemProps {
@@ -24,7 +25,7 @@ const PriceTableItem = ({ service }: PriceTableItemProps) => {
                     <li key={index}>{feature}</li>
                 ))}
             </ul>
-            <Link className="price-item-link" to="/admin/users">Pogledaj primjere videa</Link>
+            <Link className="price-item-link" to={`/gallery?type=${service.videoType}`}>Pogledaj primjere videa</Link>
             <Link className="price-item-link price-item-link-cta" to={`/payment-form?serviceId=${service.id}`}>Naruči video</Link>
         </div>
     )

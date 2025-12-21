@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import "./Gallery.css";
 import ReelGallery from "./components/ReelGallery/ReelGallery";
 import LandscapeGallery from "./components/LandscapeGallery/LandscapeGallery";
@@ -27,8 +28,17 @@ const galleryVideos: GalleryVideo[] = [
 type VideoType = "reel" | "landscape";
 
 export default function Gallery() {
+    const [searchParams] = useSearchParams();
     const [selectedType, setSelectedType] = useState<VideoType>("reel");
     const [activeVideo, setActiveVideo] = useState<GalleryVideo | null>(null);
+
+    // Read type from URL param on mount
+    useEffect(() => {
+        const typeParam = searchParams.get("type");
+        if (typeParam === "reel" || typeParam === "landscape") {
+            setSelectedType(typeParam);
+        }
+    }, [searchParams]);
 
     const filteredVideos = galleryVideos.filter((v) => v.type === selectedType);
 

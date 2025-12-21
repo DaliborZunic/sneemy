@@ -13,7 +13,7 @@ using Sneemy.API.Data;
 namespace Sneemy.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251219232044_InitialMigration")]
+    [Migration("20251221133744_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -252,6 +252,11 @@ namespace Sneemy.API.Migrations
                     b.Property<decimal>("Price")
                         .HasPrecision(10, 2)
                         .HasColumnType("numeric(10,2)");
+
+                    b.Property<string>("VideoType")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.HasKey("Id");
 

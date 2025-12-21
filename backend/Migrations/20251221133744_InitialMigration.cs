@@ -38,7 +38,8 @@ namespace Sneemy.API.Migrations
                     Price = table.Column<decimal>(type: "numeric(10,2)", precision: 10, scale: 2, nullable: false),
                     Features = table.Column<List<string>>(type: "text[]", nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    DisplayOrder = table.Column<int>(type: "integer", nullable: false)
+                    DisplayOrder = table.Column<int>(type: "integer", nullable: false),
+                    VideoType = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
