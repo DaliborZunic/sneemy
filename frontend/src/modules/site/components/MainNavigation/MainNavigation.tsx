@@ -20,9 +20,9 @@ const MainNavigation = () => {
         <div className="main-navigation-wrapper">
             <SneemyLogo logoColorHex="#FBFE00" />
             <nav className={`main-navigation ${menuShown ? "menu-shown" : ""}`}>
-                <Link to="/" onClick={closeMenu}>Home</Link>
-                <Link to="/payment-form" onClick={closeMenu}>About Us</Link>
-                <Link to="/gallery" onClick={closeMenu}>Gallery</Link>
+                <Link to="/" onClick={closeMenu}>Početna</Link>
+                <Link to="/payment-form" onClick={closeMenu}>O nama</Link>
+                <Link to="/gallery" onClick={closeMenu}>Galerija</Link>
                 <Link className="highlighted-nav-link" to="/payment-form" onClick={closeMenu}>Naruči video</Link>
             </nav>
             <div className="hamburger-icon-wrapper" onClick={handleHamburgerClick}>

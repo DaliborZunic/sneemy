@@ -14,7 +14,7 @@ export default function SiteApp() {
         <div className="site-root">
             <MainNavigation />
 
-            <Suspense fallback={<div>Loading site...</div>}>
+            <Suspense fallback={<div>Učitavanje...</div>}>
                 <Routes>
                     <Route index element={<Home />} />
                     <Route path="payment-form" element={<PaymentForm />} />

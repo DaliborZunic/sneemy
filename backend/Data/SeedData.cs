@@ -69,23 +69,6 @@ namespace Sneemy.API.Data
                     },
                     new Service
                     {
-                        Name = "Story / reel objava",
-                        Description = "Za male obrte, OPG-ove i influencere koji žele prezentirati proizvod u modernom formatu.",
-                        Price = 59m,
-                        Features = new List<string>
-                        {
-                            "video ca. 30 sekundi",
-                            "autentičan stil mobilnog formata",
-                            "animacija logotipa",
-                            "glazba u pozadini",
-                            "1 revizija uključena"
-                        },
-                        IsActive = true,
-                        DisplayOrder = 2,
-                        VideoType = "reel"
-                    },
-                    new Service
-                    {
                         Name = "YouTube promo video",
                         Description = "Za tvrtke koje žele profesionalni promotivni video za YouTube ili web stranicu.",
                         Price = 149m,
@@ -98,7 +81,7 @@ namespace Sneemy.API.Data
                             "2 revizije uključene"
                         },
                         IsActive = true,
-                        DisplayOrder = 3,
+                        DisplayOrder = 2,
                         VideoType = "landscape"
                     }
                 };

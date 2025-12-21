@@ -53,7 +53,7 @@ export default function Gallery() {
     return (
         <section className="gallery-section">
             <div className="section-content-wrapper">
-                <h1>Gallery</h1>
+                <h1>Galerija</h1>
 
                 <div className="gallery-type-selector">
                     <select
@@ -61,8 +61,8 @@ export default function Gallery() {
                         value={selectedType}
                         onChange={(e) => setSelectedType(e.target.value as VideoType)}
                     >
-                        <option value="reel">Reels (Portrait)</option>
-                        <option value="landscape">YouTube Style (Landscape)</option>
+                        <option value="reel">Reels (portret)</option>
+                        <option value="landscape">YouTube stil (pejzaž)</option>
                     </select>
                 </div>
 
