@@ -1,0 +1,113 @@
+.video-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+.video-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 3rem;
+    height: 3rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+    z-index: 1001;
+}
+
+.video-modal-close:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.video-modal-close svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: white;
+}
+
+.video-modal-content {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.video-modal-content iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.5rem;
+}
+
+/* Landscape video sizing (16:9) */
+.video-modal-content.landscape-video {
+    max-width: min(90vw, 1200px);
+    aspect-ratio: 16 / 9;
+}
+
+/* Reel video sizing (9:16) */
+.video-modal-content.reel-video {
+    max-width: min(50vw, 400px);
+    max-height: 90vh;
+    aspect-ratio: 9 / 16;
+}
+
+@media (max-width: 768px) {
+    .video-modal-backdrop {
+        padding: 0.5rem;
+        padding-top: 4rem;
+    }
+
+    .video-modal-close {
+        top: 0.5rem;
+        right: 0.5rem;
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .video-modal-close svg {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+
+    .video-modal-content.landscape-video {
+        max-width: 100%;
+    }
+
+    .video-modal-content.reel-video {
+        max-width: 90vw;
+        max-height: calc(100vh - 5rem);
+    }
+}
+
+@media (max-width: 480px) {
+    .video-modal-content.reel-video {
+        max-width: 100%;
+        max-height: calc(100vh - 4rem);
+    }
+}
+
+/* Handle landscape orientation on mobile for reel videos */
+@media (max-height: 500px) and (orientation: landscape) {
+    .video-modal-content.reel-video {
+        max-width: auto;
+        max-height: 85vh;
+        width: auto;
+    }
+}

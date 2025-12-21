@@ -1,0 +1,68 @@
+.landscape-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.landscape-thumbnail-wrapper {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: #5500c9;
+}
+
+.landscape-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.landscape-thumbnail-wrapper:hover .landscape-thumbnail {
+    transform: scale(1.05);
+}
+
+.landscape-play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.landscape-thumbnail-wrapper:hover .landscape-play-overlay {
+    opacity: 1;
+}
+
+.landscape-client-name {
+    margin: 0;
+    margin-top: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #f4f0f7;
+}
+
+@media (max-width: 768px) {
+    .landscape-gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .landscape-gallery-grid {
+        gap: 0.75rem;
+    }
+
+    .landscape-thumbnail-wrapper {
+        border-radius: 0.5rem;
+    }
+}

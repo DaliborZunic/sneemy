@@ -1,0 +1,99 @@
+.reel-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+}
+
+.reel-thumbnail-wrapper {
+    position: relative;
+    aspect-ratio: 9 / 16;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: #5500c9;
+}
+
+.reel-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.reel-thumbnail-wrapper:hover .reel-thumbnail {
+    transform: scale(1.05);
+}
+
+.reel-play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.reel-thumbnail-wrapper:hover .reel-play-overlay {
+    opacity: 1;
+}
+
+.play-icon {
+    width: 4rem;
+    height: 4rem;
+    color: #fbfe00;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.reel-client-name {
+    margin: 0;
+    margin-top: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #f4f0f7;
+    text-align: center;
+}
+
+@media (max-width: 1320px) {
+    .reel-gallery-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .reel-gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+
+    .play-icon {
+        width: 3rem;
+        height: 3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .reel-gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+
+    .reel-thumbnail-wrapper {
+        border-radius: 0.5rem;
+    }
+
+    .play-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .reel-client-name {
+        font-size: 0.85rem;
+        margin-top: 0.5rem;
+    }
+}
