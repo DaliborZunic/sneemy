@@ -198,6 +198,7 @@ export default function StripePaymentModal({ formData, files, serviceId, amount,
     mode: 'payment' as const,
     amount: Math.round(amount * 100), // Convert to cents
     currency: 'eur',
+    paymentMethodTypes: ['card'] as const,
     appearance: {
       theme: "stripe" as const,
     },

@@ -17,10 +17,7 @@ namespace Sneemy.API.Services
             {
                 Amount = (long)(amount * 100), // Convert to cents
                 Currency = currency,
-                AutomaticPaymentMethods = new PaymentIntentAutomaticPaymentMethodsOptions
-                {
-                    Enabled = true,
-                },
+                PaymentMethodTypes = new List<string> { "card" },
             };
 
             var service = new PaymentIntentService();
