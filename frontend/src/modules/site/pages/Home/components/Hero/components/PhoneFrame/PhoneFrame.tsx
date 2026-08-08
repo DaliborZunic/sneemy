@@ -1,8 +1,6 @@
 import "./PhoneFrame.css";
-
 const PhoneFrame = () => {
-    return (
-        <>
+    return (<>
             <div className="main-phone-wrapper">
                 <svg className="phone-frame back-phone-frame" version="1.1" id="Слой_2" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1064 2147" enable-background="new 0 0 1064 2147">
                     <path d="M1047.373,339.5h-2.023V127.36C1045.35,57.021,988.329,0,917.99,0H146.009
@@ -22,9 +20,6 @@ const PhoneFrame = () => {
                 </div>
             </div>
 
-        </>
-
-    )
-}
-
-export default PhoneFrame
+        </>);
+};
+export default PhoneFrame;

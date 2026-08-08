@@ -1,9 +1,7 @@
 import "./NotFound.css";
 import { Link } from "react-router-dom";
-
 export default function NotFound() {
-    return (
-        <section className="not-found-section">
+    return (<section className="not-found-section">
             <div className="section-content-wrapper">
                 <h1>404</h1>
                 <p>Stranica koju tražite ne postoji</p>
@@ -11,6 +9,5 @@ export default function NotFound() {
                     Natrag na početnu
                 </Link>
             </div>
-        </section>
-    );
+        </section>);
 }

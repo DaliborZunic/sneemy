@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import api from "../../../../api";
-import type { Order } from "./Orders";
+import api from "@api";
 import "./OrderDetails.css";
-
-const formatOrderDate = (isoDate: string) => {
-    if (!isoDate) return "-";
+import type { Order } from "@/types";
+const formatOrderDate = (isoDate: string | undefined | null) => {
+    if (!isoDate)
+        return "-";
     return new Date(isoDate).toLocaleString("hr-HR", {
         year: "numeric",
         month: "long",
@@ -14,44 +14,36 @@ const formatOrderDate = (isoDate: string) => {
         minute: "2-digit"
     });
 };
-
 export default function OrderDetails() {
-    const { id } = useParams<{ id: string }>();
+    const { id } = useParams();
     const navigate = useNavigate();
     const [order, setOrder] = useState<Order | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
-
     useEffect(() => {
         if (id) {
             api.get(`/Orders/${id}`)
-                .then((res) => {
-                    setOrder(res.data);
-                    setLoading(false);
-                })
-                .catch((err) => {
-                    console.error("Failed to fetch order:", err);
-                    setError("Nije moguće učitati narudžbu");
-                    setLoading(false);
-                });
+                .then((res: any) => {
+                setOrder(res.data);
+                setLoading(false);
+            })
+                .catch((err: any) => {
+                console.error("Failed to fetch order:", err);
+                setError("Nije moguće učitati narudžbu");
+                setLoading(false);
+            });
         }
     }, [id]);
-
     if (loading) {
         return <div className="order-details-wrapper">Učitavam...</div>;
     }
-
     if (error || !order) {
-        return (
-            <div className="order-details-wrapper">
+        return (<div className="order-details-wrapper">
                 <p className="error-message">{error || "Narudžba nije pronađena"}</p>
                 <button onClick={() => navigate("/admin/orders")}>Natrag na narudžbe</button>
-            </div>
-        );
+            </div>);
     }
-
-    return (
-        <section className="order-details-wrapper">
+    return (<section className="order-details-wrapper">
             <div className="order-details-header">
                 <h1>Detalji narudžbe</h1>
                 <button onClick={() => navigate("/admin/orders")}>Natrag</button>
@@ -106,10 +98,9 @@ export default function OrderDetails() {
                     <h2>R1 Račun</h2>
                     <div className="detail-row">
                         <span className="detail-label">R1 račun</span>
-                        <span className="detail-value">{order.isR1Reciept ? "Da" : "Ne"}</span>
+                        <span className="detail-value">{order.isR1Receipt ? "Da" : "Ne"}</span>
                     </div>
-                    {order.isR1Reciept && (
-                        <>
+                    {order.isR1Receipt && (<>
                             <div className="detail-row">
                                 <span className="detail-label">Naziv tvrtke</span>
                                 <span className="detail-value">{order.companyName || "-"}</span>
@@ -118,10 +109,9 @@ export default function OrderDetails() {
                                 <span className="detail-label">OIB tvrtke</span>
                                 <span className="detail-value">{order.companyOIB || "-"}</span>
                             </div>
-                        </>
-                    )}
+                        </>)}
                 </div>
-
+ 
                 <div className="detail-group">
                     <h2>Plaćanje</h2>
                     <div className="detail-row">
@@ -130,6 +120,5 @@ export default function OrderDetails() {
                     </div>
                 </div>
             </div>
-        </section>
-    );
+        </section>);
 }

@@ -1,12 +1,10 @@
 import "./Footer.css";
-import SneemyLogo from "../../../../components/shared/SneemyLogo/SneemyLogo";
-
+import SneemyLogo from "@modules/site/components/shared/SneemyLogo/SneemyLogo";
 const Footer = () => {
-  return (
-    <div className="footer-section">
+    return (<div className="footer-section">
       <div className="section-content-wrapper">
         <div className="left-footer-column">
-          <SneemyLogo logoColorHex="white" />
+          <SneemyLogo logoColorHex="white"/>
           <p className="footer-info">
             © 2025 Sneemy – obrt za video produkciju<br />
             vl. Dalibor Žunić,
@@ -22,8 +20,6 @@ const Footer = () => {
           </p>
         </div>
       </div>
-    </div>
-  )
-}
-
-export default Footer
+    </div>);
+};
+export default Footer;
