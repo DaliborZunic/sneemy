@@ -259,7 +259,7 @@ export default function PaymentForm() {
               <select className={`service-select${errors.serviceId ? " input-error" : ""}`} value={selectedServiceId ?? ""} onChange={handleServiceChange}>
                 <option value="">odaberite uslugu*</option>
                 {services.map(service => (<option key={service.id} value={service.id}>
-                        {service.serviceName} - {service.price}€
+                        {service.name} - {service.price}€
                   </option>))}
               </select>
               {errors.serviceId && <span className="field-error">{errors.serviceId}</span>}

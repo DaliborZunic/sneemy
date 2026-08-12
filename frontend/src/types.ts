@@ -14,15 +14,11 @@ export type Role = 'admin' | 'user';
 
 export interface Service {
     id: number;
-    serviceName: string;
+    name: string;
     price: number;
-    features?: Feature[];
+    features?: string[];
     description?: string;
     videoType?: 'reel' | 'landscape';
-}
-
-export interface Feature {
-    title: string;
 }
 
 export interface Order {
